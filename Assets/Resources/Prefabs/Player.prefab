@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 5500623438296634559}
   - component: {fileID: 5500623438296634556}
   m_Layer: 0
-  m_Name: StayinAliveeee
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

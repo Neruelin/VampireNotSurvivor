@@ -153,7 +153,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &207800661
 MonoBehaviour:
@@ -167,17 +167,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ebd0c6b80a59ba43a1fe9049b9d817e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interval: 1
+  interval: 0
   maxEnemies: 50
   enemySpeed: 3
   enemyDefaultMaterial: {fileID: 2100000, guid: b525a460574df69479079411e889eecd, type: 2}
-  enemyModel: {fileID: 1846152092054389202, guid: 6c91e9b22088d7648b2e394f4b2187f9, type: 3}
-  enemyTarget: {fileID: 460319188}
---- !u!1 &460319188 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5500623438296634558, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
-  m_PrefabInstance: {fileID: 5500623438679915882}
-  m_PrefabAsset: {fileID: 0}
+  enemyModel: {fileID: 4735772873781977492, guid: 9b5688b13ab6b254981bb7fd900c5740, type: 3}
+  enemyTarget: {fileID: 1271106305}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +267,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &5500623438679915882
+--- !u!1001 &1271106304
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -281,11 +276,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5500623438296634558, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: m_Name
-      value: StayinAliveeee
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5500623438296634559, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5500623438296634559, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: m_LocalPosition.x
@@ -329,6 +324,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+--- !u!1 &1271106305 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5500623438296634558, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+  m_PrefabInstance: {fileID: 1271106304}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5718362643962549564
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -339,7 +339,7 @@ PrefabInstance:
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 460319188}
+      objectReference: {fileID: 1271106305}
     - target: {fileID: 5718362644927500677, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: m_RootOrder
       value: 1
