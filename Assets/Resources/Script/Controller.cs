@@ -15,7 +15,6 @@ public class Controller : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        float frametime = Time.deltaTime;
         Vector3 direction = new Vector3(0,0,0);
         if (Input.GetKey(KeyCode.A))
             direction += Vector3.left;
@@ -26,6 +25,7 @@ public class Controller : MonoBehaviour
         if (Input.GetKey(KeyCode.S))
             direction += Vector3.down;
         Vector3.Normalize(direction);
-        gameObject.transform.position += direction * frametime * speed;
+        Debug.Log(direction);
+        gameObject.GetComponent<Rigidbody>().AddForce(direction * speed);
     }
 }

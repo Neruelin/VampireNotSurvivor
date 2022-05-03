@@ -8,16 +8,14 @@ public class Map : MonoBehaviour
 {
 
     private System.Random rnd = new System.Random();
-    private GameObject[] prefab = new GameObject[3] {null, null, null};
+    public GameObject[] prefab = new GameObject[4];
     private const int defaultTile = 0;
     private List<GameObject> rendered;
     private HashSet<string> renderedSet;
     public GameObject player = null;
     public Dictionary<string, int> tiles;   
     public float tileSize;
-    public Material m1;
-    public Material m2;
-    public Material m3;
+    public Material[] mats = new Material[4];
 
     public bool localRender = false;
 
@@ -110,14 +108,14 @@ public class Map : MonoBehaviour
         int y = (int) player.transform.position.y;
         Dictionary<string, int> subMap = tiles;
         if (localRender) {
-            subMap = GetMapAroundPixel(x, y, 15);
+            subMap = GetMapAroundPixel(x, y, 20);
             foreach (var go in rendered) {
                 DestroyImmediate(go);
             }
             rendered.Clear();
             renderedSet.Clear();
         } else {
-            GenerateAroundPixel(x, y, 15);
+            GenerateAroundPixel(x, y, 20);
         }
         string output = "\n";
         int i = 0;
@@ -138,35 +136,117 @@ public class Map : MonoBehaviour
         // Debug.Log(output);
     }
 
-    void Awake() {
+    async void Awake() {
         tiles = new Dictionary<string, int>();
-        Material[] mats = new Material[3] {m1, m2, m3};
-        prefab = new GameObject[3] {new GameObject("Tile"), new GameObject("Tile"), new GameObject("Tile")};
-        for (int j = 0; j < 3; j++) {
-            GameObject go = prefab[j];
+        prefab = new GameObject[4] {new GameObject("Tile"), new GameObject("Tile"), new GameObject("Tile"), new GameObject("Column")};
+
+        GameObject go = null;
+        Mesh tileMesh = new Mesh();
+        Mesh columnMesh = new Mesh();
+        
+        // generating tile meshes
+        float increment = (float) (2 * Math.PI/6);
+        float offset = (float) (Math.PI/6);
+        int i = 0;
+        tileMesh.vertices = new Vector3[] {
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0),
+        };
+        tileMesh.triangles = new int[] {
+            0, 5, 1,
+            1, 5, 2,
+            2, 5, 4,
+            2, 4, 3
+        };
+
+        // generating column meshes
+        i = 0;
+        increment = (float) (2 * Math.PI/6);
+        offset = (float) (Math.PI/6);
+        int height = 3;
+        columnMesh.vertices = new Vector3[] {
+            //bottom vertices
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0),
+
+            //top vertices
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),-height), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),-height), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),-height), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),-height), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),-height), 
+            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),-height)
+        };
+        columnMesh.triangles = new int[] {
+            //top triangles
+            1, 5, 0,
+            2, 5, 1,
+            4, 5, 2,
+            3, 4, 2,
+
+            //side triangles
+            0, 6, 7,
+            7, 1, 0,
+
+            1, 7, 8,
+            8, 2, 1,
+
+            2, 8, 9,
+            9, 3, 2,
+
+            3, 9, 10,
+            10, 4, 3, 
+
+            4, 10, 11,
+            11, 5, 4,
+
+            5, 11, 6,
+            6, 0, 5,
+
+            //bottom triangles
+            6, 11, 7,
+            7, 11, 8,
+            8, 11, 10,
+            8, 10, 9,
+        };
+        
+        // GameObject empty = new GameObject("MeshColliderEmpty");
+
+        // Mesh copyColumnMesh = new Mesh();
+
+        // copyColumnMesh.vertices = columnMesh.vertices.Clone() as Vector3[];
+        // copyColumnMesh.triangles = columnMesh.triangles.Clone() as int[];
+
+        // for (int j = 0; j < copyColumnMesh.vertices.Length; j++) {
+        //     copyColumnMesh.vertices[j] *= 1.2f;
+        // }
+
+
+        // generating tile prefabs
+        for (int j = 0; j < 4; j++) {
+            go = prefab[j];
             go.AddComponent<MeshFilter>();
             go.AddComponent<MeshRenderer>();
             go.AddComponent<Renderer>();
-            var mesh = new Mesh();
-            int i = 0;
-            float increment = (float) (2 * Math.PI/6);
-            float offset = (float) (Math.PI/6);
-            mesh.vertices = new Vector3[] {
-                new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-                new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-                new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-                new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-                new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-                new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0)
-            };
-            mesh.triangles = new int[] {
-                0, 5, 1,
-                1, 5, 2,
-                2, 5, 4,
-                2, 4, 3
-            };
-            go.GetComponent<MeshFilter>().mesh = mesh;
+            Rigidbody rb = go.AddComponent<Rigidbody>();
+            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ; 
             go.transform.localScale = new Vector3(1,1,1) * tileSize;
+            if (j == 3) {
+                go.GetComponent<MeshFilter>().mesh = columnMesh;
+                MeshCollider c = go.AddComponent<MeshCollider>();    
+                c.sharedMesh = columnMesh;
+                c.convex = true;
+            } else {
+                go.GetComponent<MeshFilter>().mesh = tileMesh;
+            }
             go.GetComponent<Renderer>().material = mats[j];
             go.SetActive(false);
         }

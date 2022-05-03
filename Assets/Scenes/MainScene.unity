@@ -168,10 +168,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interval: 0
-  maxEnemies: 50
-  enemySpeed: 3
+  maxEnemies: 10
+  enemySpeed: 20
+  enemyDrag: 0.5
   enemyDefaultMaterial: {fileID: 2100000, guid: b525a460574df69479079411e889eecd, type: 2}
-  enemyModel: {fileID: 4735772873781977492, guid: 9b5688b13ab6b254981bb7fd900c5740, type: 3}
+  enemyModel: {fileID: 7048701139865822703, guid: 641637c9c4d9f7040968a49feb6b46c0, type: 3}
   enemyTarget: {fileID: 1271106305}
 --- !u!1 &705507993
 GameObject:
@@ -208,7 +209,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -274,6 +275,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4514516956338559827, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_Drag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4514516956338559827, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4514516956338559827, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500623438296634556, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5500623438296634558, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: m_Name
       value: Player
@@ -322,6 +339,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6291162642955369162, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_Height
+      value: 2.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 6291162642955369162, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6291162642955369162, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6291162642955369162, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6291162642955369162, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_Center.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6291162642955369162, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_Direction
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
 --- !u!1 &1271106305 stripped
@@ -337,9 +378,29 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
+      propertyPath: m4
+      value: 
+      objectReference: {fileID: 2100000, guid: a443c8e75ce408746b00713dac9b99d3, type: 2}
+    - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1271106305}
+    - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
+      propertyPath: mats.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7f46e5fe504486642930e3ec69c9878d, type: 2}
+    - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
+      propertyPath: mats.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9bb660069b200354987b1af424545be8, type: 2}
+    - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
+      propertyPath: mats.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 24cd0f4467a084a49ae5bf386f85c352, type: 2}
+    - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
+      propertyPath: mats.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: a443c8e75ce408746b00713dac9b99d3, type: 2}
     - target: {fileID: 5718362644927500677, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: m_RootOrder
       value: 1

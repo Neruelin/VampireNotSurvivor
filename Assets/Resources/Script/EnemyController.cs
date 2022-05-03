@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour
             float distToPlayer = dirToPlayer.magnitude;
             if (distToPlayer > threshold) {
                 Vector3.Normalize(dirToPlayer);
-                rb.AddForce(dirToPlayer * speed);
+                rb.AddForce(dirToPlayer * speed * Time.deltaTime);
             }
         } else {
             target = GameObject.FindWithTag("Player");

@@ -10,6 +10,7 @@ public class EnemySpawn : MonoBehaviour {
     public int interval = 10;
     public int maxEnemies = 10;
     public float enemySpeed = 1;
+    public float enemyDrag = 1;
     public Material enemyDefaultMaterial = null;
     public GameObject enemyModel = null;
     public GameObject enemyTarget = null;
@@ -22,8 +23,9 @@ public class EnemySpawn : MonoBehaviour {
         EnemyController EC = enemyPrefab.AddComponent<EnemyController>();
         EC.speed = enemySpeed;
         Rigidbody rb = enemyPrefab.AddComponent<Rigidbody>();    
+        
         rb.constraints = RigidbodyConstraints.FreezePositionZ;
-        rb.drag = 5;
+        rb.drag = enemyDrag;
         rb.useGravity = false;
 
         if (enemyDefaultMaterial == null) {
