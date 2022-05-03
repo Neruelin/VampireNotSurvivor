@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour
 {
 
     public GameObject target = null;
-    public int speed = 1;
+    public float speed = 1;
     public int threshold = 5;
     private Rigidbody rb;
     // Start is called before the first frame update

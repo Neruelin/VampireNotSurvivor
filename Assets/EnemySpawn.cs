@@ -4,31 +4,44 @@ using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour {
 
-    public int maxEnemies = 10;
+    private GameObject enemyPrefab = null;
     private List<GameObject> enemies = null;
-    public GameObject enemyTarget = null;
-    public GameObject enemyPrefab = null;
-    public Material mat = null;
+    private float targetTime = 0;
     public int interval = 10;
-    public float targetTime = 0;
+    public int maxEnemies = 10;
+    public float enemySpeed = 1;
+    public Material enemyDefaultMaterial = null;
+    public GameObject enemyModel = null;
+    public GameObject enemyTarget = null;
 
     void Awake() {
         enemies = new List<GameObject>();
-
+        
         enemyPrefab = new GameObject("Enemy");
         enemyPrefab.transform.position = new Vector3(0,0,0);
-        enemyPrefab.AddComponent<EnemyController>();
+        EnemyController EC = enemyPrefab.AddComponent<EnemyController>();
+        EC.speed = enemySpeed;
         Rigidbody rb = enemyPrefab.AddComponent<Rigidbody>();    
         rb.constraints = RigidbodyConstraints.FreezePositionZ;
         rb.drag = 5;
         rb.useGravity = false;
 
-        GameObject model = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        model.transform.position = new Vector3(0,0,0);
-        model.GetComponent<Renderer>().material = mat;
-        model.transform.SetParent(enemyPrefab.transform);
+        if (enemyDefaultMaterial == null) {
+            enemyDefaultMaterial = new Material(Shader.Find("Transparent/Diffuse"));
+            enemyDefaultMaterial.color = Color.red;
+        }
 
-        enemyPrefab.transform.position += new Vector3(0,0,-1);
+        if (enemyModel == null) {
+            enemyModel = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            enemyModel.GetComponent<Renderer>().material = enemyDefaultMaterial;
+        } else {
+            enemyModel = Instantiate(enemyModel, new Vector3(0,0,0), Quaternion.identity);
+        }
+
+        enemyModel.transform.position = new Vector3(0,0,-2);
+        enemyModel.transform.SetParent(enemyPrefab.transform);
+
+        // enemyPrefab.transform.position += new Vector3(0,0,0);
         enemyPrefab.SetActive(false);
     }
 

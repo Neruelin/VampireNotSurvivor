@@ -7,19 +7,18 @@ using UnityEngine;
 public class Map : MonoBehaviour
 {
 
-    public Dictionary<string, int> tiles;   
-    public const int defaultTile = 0;
-    public float tileSize;
+    private System.Random rnd = new System.Random();
     private GameObject[] prefab = new GameObject[3] {null, null, null};
-
+    private const int defaultTile = 0;
+    private List<GameObject> rendered;
+    private HashSet<string> renderedSet;
+    public GameObject player = null;
+    public Dictionary<string, int> tiles;   
+    public float tileSize;
     public Material m1;
     public Material m2;
     public Material m3;
 
-    private System.Random rnd = new System.Random();
-
-    private List<GameObject> rendered;
-    private HashSet<string> renderedSet;
     public bool localRender = false;
 
     int Get(int q, int r) {
@@ -107,7 +106,6 @@ public class Map : MonoBehaviour
     }
 
     void RenderMap() {
-        GameObject player = GameObject.Find("StayinAliveeee");
         int x = (int) player.transform.position.x;
         int y = (int) player.transform.position.y;
         Dictionary<string, int> subMap = tiles;
@@ -186,6 +184,11 @@ public class Map : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (player == null) {
+            Debug.Log("No Player Added to Map");
+            return;
+        }
+
         RenderMap();
     }
 }
