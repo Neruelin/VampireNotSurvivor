@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 207800660}
+  - component: {fileID: 207800661}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -154,6 +155,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &207800661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207800659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ebd0c6b80a59ba43a1fe9049b9d817e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxEnemies: 10
+  enemyTarget: {fileID: 460319188}
+  enemyPrefab: {fileID: 0}
+  mat: {fileID: 0}
+  interval: 10
+  targetTime: 0
 --- !u!1 &380575642
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,7 +283,7 @@ GameObject:
   - component: {fileID: 460319190}
   m_Layer: 0
   m_Name: StayinAliveeee
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -276,7 +295,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 460319188}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -586,7 +605,7 @@ GameObject:
   - component: {fileID: 1233388729}
   - component: {fileID: 1233388728}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: MapObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -604,10 +623,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40830745c328c59489c302c59641fcc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSize: 19
+  tileSize: 2
   m1: {fileID: 2100000, guid: 7f46e5fe504486642930e3ec69c9878d, type: 2}
   m2: {fileID: 2100000, guid: 9bb660069b200354987b1af424545be8, type: 2}
   m3: {fileID: 2100000, guid: 24cd0f4467a084a49ae5bf386f85c352, type: 2}
+  localRender: 0
 --- !u!4 &1233388729
 Transform:
   m_ObjectHideFlags: 0
