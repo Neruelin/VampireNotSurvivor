@@ -6,11 +6,10 @@ public class ProjectileController : Controller
 {
     public float TimeToLive = 5;
     protected Stat Attack = new Stat("Attack", 50, 1, 0);
-
-    protected Stat Speed = new Stat("Speed", 5, 1, 0);
     private IEnumerator DespawnCoroutine;
 
     void Awake() {
+        Speed.SetBase(5);
         DespawnCoroutine = Despawn();
     }
 

@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class PlayerController : Controller {
     
-    public int speed;
     public float invincibilityFramesTimer;
-    private System.Random rnd = new System.Random();
     public bool isInvincible = false;
-
     public GameObject ProjectilePrefab;
     protected Stat AttackDelay = new Stat("AttackDelay", 1, 1, 0);
     private IEnumerator SpawnProjectileCoroutine;
@@ -49,6 +46,7 @@ public class PlayerController : Controller {
     public new void Damage (float amount) {
         if (!isInvincible) {
             isInvincible = true;
+            Debug.Log("Damaged " + amount);
             base.Damage(amount);
             StartCoroutine(RemoveInvincibility());   
         }

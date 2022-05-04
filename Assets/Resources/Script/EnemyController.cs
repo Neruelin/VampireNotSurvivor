@@ -39,7 +39,7 @@ public class EnemyController : Controller {
 
     void OnCollisionStay(Collision collision) {
         if (collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<PlayerController>().Damage(damage);
+            collision.gameObject.GetComponent<PlayerController>().Damage(Attack.Value());
         }
     }
 }
