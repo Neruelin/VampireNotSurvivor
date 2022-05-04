@@ -28,7 +28,6 @@ public class Controller : MonoBehaviour
         if (Health.Remove(amount) <= 0) {
             HandleDeath();
         }
-
     }
 
     protected void HandleDeath() {

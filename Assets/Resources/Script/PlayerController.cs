@@ -46,7 +46,6 @@ public class PlayerController : Controller {
     public new void Damage (float amount) {
         if (!isInvincible) {
             isInvincible = true;
-            Debug.Log("Damaged " + amount);
             base.Damage(amount);
             StartCoroutine(RemoveInvincibility());   
         }
