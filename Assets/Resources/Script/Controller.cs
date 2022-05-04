@@ -34,7 +34,9 @@ public class Controller : MonoBehaviour
     public void damagePlayer(int damage)
     {
         currentHealth -= damage;
-        Debug.Log("Max Health" + currentHealth);
-        Debug.Log("Damage" + damage);
+        // Set character to inactive if less than 0 health
+        if(currentHealth == 0) {
+            this.gameObject.SetActive(false);
+        }
     }
 }
