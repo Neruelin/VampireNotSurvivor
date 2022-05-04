@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8900661709871274331}
   m_Layer: 0
   m_Name: Cube 1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,4 +130,4 @@ MonoBehaviour:
   target: {fileID: 5500623438296634558, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
   speed: 15
   threshold: 5
-  damage: 5
+  damage: 1

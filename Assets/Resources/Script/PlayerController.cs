@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : Controller
-{
+public class PlayerController : Controller {
+    
+    public int speed;
+    public float invincibilityFramesTimer;
+    private System.Random rnd = new System.Random();
+    public bool isInvincible = false;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
 
     }
 
     // Update is called once per frame
     void Update() {
-        Vector3 direction = new Vector3(0,0,0);
+        Vector3 direction = new Vector3(0, 0, 0);
         if (Input.GetKey(KeyCode.A))
             direction += Vector3.left;
         if (Input.GetKey(KeyCode.D))
@@ -24,5 +27,18 @@ public class PlayerController : Controller
             direction += Vector3.down;
         Vector3.Normalize(direction);
         gameObject.GetComponent<Rigidbody>().AddForce(direction * Speed.Value());
+    }
+
+    public new void Damage (float amount) {
+        if (!isInvincible) {
+            isInvincible = true;
+            base.Damage(amount);
+            StartCoroutine(RemoveInvincibility());   
+        }
+    }
+
+    public IEnumerator RemoveInvincibility() {
+        yield return new WaitForSeconds(invincibilityFramesTimer);
+        isInvincible = false;
     }
 }

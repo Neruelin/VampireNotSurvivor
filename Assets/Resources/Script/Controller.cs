@@ -25,12 +25,13 @@ public class Controller : MonoBehaviour
     }
 
     public void Damage(float amount) {
-        if (Health.Remove(amount) == 0) {
+        if (Health.Remove(amount) <= 0) {
             HandleDeath();
         }
+
     }
 
     private void HandleDeath() {
-        DestroyImmediate(gameObject);
+        Destroy(gameObject);
     }
 }

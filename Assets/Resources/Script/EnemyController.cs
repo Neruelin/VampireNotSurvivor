@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : Controller
-{
+public class EnemyController : Controller {
 
     public GameObject target = null;
     public int threshold = 5;
@@ -29,9 +28,14 @@ public class EnemyController : Controller
     }
     
     void OnCollisionEnter(Collision collision) {
-        if(collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<Controller>().Damage(damage);
+        if (collision.gameObject.tag == "Player") {
+            collision.gameObject.GetComponent<PlayerController>().Damage(damage);
+        }
+    }
+
+    void OnCollisionStay(Collision collision) {
+        if (collision.gameObject.tag == "Player") {
+            collision.gameObject.GetComponent<PlayerController>().Damage(damage);
         }
     }
 }
-
