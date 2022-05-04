@@ -29,13 +29,13 @@ public class EnemyController : Controller {
     
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.tag == "Player") {
-            StartCoroutine(collision.gameObject.GetComponent<PlayerController>().damagePlayer(damage));
+            collision.gameObject.GetComponent<PlayerController>().Damage(damage);
         }
     }
 
     void OnCollisionStay(Collision collision) {
         if (collision.gameObject.tag == "Player") {
-            StartCoroutine(collision.gameObject.GetComponent<PlayerController>().damagePlayer(damage));
+            collision.gameObject.GetComponent<PlayerController>().Damage(damage);
         }
     }
 }

@@ -6,9 +6,8 @@ public class PlayerController : Controller {
     
     public int speed;
     public float invincibilityFramesTimer;
-
     private System.Random rnd = new System.Random();
-    private bool isInvincible = false;
+    public bool isInvincible = false;
 
     // Start is called before the first frame update
     void Start() {
@@ -30,12 +29,16 @@ public class PlayerController : Controller {
         gameObject.GetComponent<Rigidbody>().AddForce(direction * Speed.Value());
     }
 
-    public IEnumerator damagePlayer(float damage) {
+    public new void Damage (float amount) {
         if (!isInvincible) {
-            Damage(damage);
             isInvincible = true;
-            yield return new WaitForSeconds(invincibilityFramesTimer);
-            isInvincible = false;
+            base.Damage(amount);
+            StartCoroutine(RemoveInvincibility());   
         }
+    }
+
+    public IEnumerator RemoveInvincibility() {
+        yield return new WaitForSeconds(invincibilityFramesTimer);
+        isInvincible = false;
     }
 }
