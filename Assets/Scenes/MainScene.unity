@@ -167,12 +167,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ebd0c6b80a59ba43a1fe9049b9d817e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interval: 0
+  enemyPrefab: {fileID: 7048701139865822703, guid: 641637c9c4d9f7040968a49feb6b46c0, type: 3}
+  spawnTime: 2
   maxEnemies: 10
-  enemySpeed: 20
-  enemyDrag: 0.5
+  enemySpeed: 1
+  enemyDrag: 1
   enemyDefaultMaterial: {fileID: 2100000, guid: b525a460574df69479079411e889eecd, type: 2}
-  enemyModel: {fileID: 7048701139865822703, guid: 641637c9c4d9f7040968a49feb6b46c0, type: 3}
   enemyTarget: {fileID: 1271106305}
 --- !u!1 &705507993
 GameObject:
@@ -294,6 +294,10 @@ PrefabInstance:
     - target: {fileID: 5500623438296634558, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500623438296634558, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5500623438296634559, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: m_RootOrder
