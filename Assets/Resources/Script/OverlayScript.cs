@@ -18,6 +18,6 @@ public class OverlayScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Health.value = player.GetComponent<Controller>().currentHealth;
+        Health.value = player.GetComponent<Controller>().GetHealthValue();
     }
 }

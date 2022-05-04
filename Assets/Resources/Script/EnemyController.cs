@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : Controller
 {
 
     public GameObject target = null;
-    public float speed = 1;
     public int threshold = 5;
-    public int damage;
+    public float damage;
     private Rigidbody rb;
 
     // Start is called before the first frame update
@@ -24,14 +23,14 @@ public class EnemyController : MonoBehaviour
             float distToPlayer = dirToPlayer.magnitude;
             if (distToPlayer > threshold) {
                 Vector3.Normalize(dirToPlayer);
-                rb.AddForce(dirToPlayer * speed * Time.deltaTime);
+                rb.AddForce(dirToPlayer * Speed.Value() * Time.deltaTime);
             }
         }
     }
     
     void OnCollisionEnter(Collision collision) {
         if(collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<Controller>().damagePlayer(damage);
+            collision.gameObject.GetComponent<Controller>().Damage(damage);
         }
     }
 }
