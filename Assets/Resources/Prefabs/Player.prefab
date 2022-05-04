@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+  invincibilityFramesTimer: 1
 --- !u!136 &6291162642955369162
 CapsuleCollider:
   m_ObjectHideFlags: 0
