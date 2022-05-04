@@ -15,6 +15,16 @@ public class Stat {
         this.Tag = Tag;
     }
 
+    public void SetBase(float value) {
+        Base = value;
+    }
+    public void SetMult(float value) {
+        Mult = value;
+    }
+    public void SetFlat(float value) {
+        Flat = value;
+    }
+
     public void AddModifier (StatModifier Mod) {
         Mods.Add(Mod);
         Mult *= Mod.Mult;

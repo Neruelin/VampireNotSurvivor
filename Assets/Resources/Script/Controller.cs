@@ -31,7 +31,7 @@ public class Controller : MonoBehaviour
 
     }
 
-    private void HandleDeath() {
+    protected void HandleDeath() {
         Destroy(gameObject);
     }
 }

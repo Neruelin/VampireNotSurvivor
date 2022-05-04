@@ -26,7 +26,7 @@ public class EnemySpawn : MonoBehaviour {
     private IEnumerator Spawn() {
         while (true) {
             if (enemies.Count < maxEnemies) {
-                GameObject go = (GameObject)Instantiate(enemyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                GameObject go = (GameObject)Instantiate(enemyPrefab, new Vector3(0, 0, -1), Quaternion.identity);
                 go.SetActive(true);
                 go.transform.SetParent(enemyParent.transform);
                 enemies.Add(go);

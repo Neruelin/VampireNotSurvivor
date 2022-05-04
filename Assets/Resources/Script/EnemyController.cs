@@ -6,8 +6,12 @@ public class EnemyController : Controller {
 
     public GameObject target = null;
     public int threshold = 5;
-    public float damage;
+    protected Stat Attack = new Stat("Attack", 10, 1, 0);
     private Rigidbody rb;
+
+    void Awake() {
+        Speed.SetBase(5);
+    }
 
     // Start is called before the first frame update
     void Start() {
@@ -26,10 +30,10 @@ public class EnemyController : Controller {
             }
         }
     }
-    
+
     void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<PlayerController>().Damage(damage);
+        if(collision.gameObject.tag == "Player") {
+            collision.gameObject.GetComponent<Controller>().Damage(Attack.Value());
         }
     }
 
