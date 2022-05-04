@@ -30,8 +30,14 @@ public class EnemyController : MonoBehaviour
     }
     
     void OnCollisionEnter(Collision collision) {
-        if(collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<Controller>().damagePlayer(damage);
+        if (collision.gameObject.tag == "Player") {
+            StartCoroutine(collision.gameObject.GetComponent<Controller>().damagePlayer(damage));
+        }
+    }
+
+    void OnCollisionStay(Collision collision) {
+        if (collision.gameObject.tag == "Player") {
+            StartCoroutine(collision.gameObject.GetComponent<Controller>().damagePlayer(damage));
         }
     }
 }

@@ -6,6 +6,7 @@ public class Controller : MonoBehaviour
 {
     //Speed
     private Stat Speed = new Stat("Speed", 1, 1, 0);
+   
     //Health
     private StatResource Health = new StatResource("Health", 1, 1, 0, 0, 100, 100, 0, 1, 0);
     public float health = 100;
@@ -13,7 +14,10 @@ public class Controller : MonoBehaviour
     public int speed;
     public int maxHealth = 100;
     public int currentHealth;
+    public float invincibilityFramesTimer;
+
     private System.Random rnd = new System.Random();
+    private bool isInvincible = false;
 
     // Start is called before the first frame update
     void Start()
@@ -34,14 +38,16 @@ public class Controller : MonoBehaviour
             direction += Vector3.down;
         Vector3.Normalize(direction);
         gameObject.GetComponent<Rigidbody>().AddForce(direction * Speed.Value());
+        
     }
 
-    public void damagePlayer(int damage)
-    {
-        currentHealth -= damage;
-        // Set character to inactive if less than 0 health
-        if(currentHealth == 0) {
-            this.gameObject.SetActive(false);
+    public IEnumerator damagePlayer(int damage) {
+        if (!isInvincible) {
+            currentHealth -= damage;
+            isInvincible = true;
+            yield return new WaitForSeconds(invincibilityFramesTimer);
+            isInvincible = false;
         }
+
     }
 }
