@@ -129,3 +129,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 5500623438296634558, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
   threshold: 5
+  damage: 1
