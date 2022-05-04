@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="height: auto; width: 100%;">
+        <ui:ProgressBar title="my-health" name="Health" style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;" />
+    </ui:VisualElement>
+</ui:UXML>

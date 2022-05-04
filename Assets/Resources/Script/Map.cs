@@ -8,7 +8,7 @@ public class Map : MonoBehaviour
 {
 
     private System.Random rnd = new System.Random();
-    public GameObject[] prefab = new GameObject[4];
+    private GameObject[] prefab = new GameObject[4];
     private const int defaultTile = 0;
     private List<GameObject> rendered;
     private HashSet<string> renderedSet;
@@ -136,7 +136,7 @@ public class Map : MonoBehaviour
         // Debug.Log(output);
     }
 
-    async void Awake() {
+    void Awake() {
         tiles = new Dictionary<string, int>();
         prefab = new GameObject[4] {new GameObject("Tile"), new GameObject("Tile"), new GameObject("Tile"), new GameObject("Column")};
 

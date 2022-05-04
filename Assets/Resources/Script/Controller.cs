@@ -6,11 +6,14 @@ public class Controller : MonoBehaviour
 {
 
     public int speed;
+    public int maxHealth = 100;
+    public int health;
+    private System.Random rnd = new System.Random();
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        health = maxHealth;
     }
 
     // Update is called once per frame
@@ -25,7 +28,6 @@ public class Controller : MonoBehaviour
         if (Input.GetKey(KeyCode.S))
             direction += Vector3.down;
         Vector3.Normalize(direction);
-        Debug.Log(direction);
         gameObject.GetComponent<Rigidbody>().AddForce(direction * speed);
     }
 }
