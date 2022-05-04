@@ -29,6 +29,10 @@ public class EnemyController : MonoBehaviour
         }
     }
     
+    public void Damage(float amount) {
+        DestroyImmediate(gameObject);
+    }
+
     void OnCollisionEnter(Collision collision) {
         if(collision.gameObject.tag == "Player") {
             collision.gameObject.GetComponent<Controller>().damagePlayer(damage);
