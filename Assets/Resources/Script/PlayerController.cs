@@ -5,10 +5,19 @@ using UnityEngine;
 public class PlayerController : Controller
 {
 
+    public GameObject ProjectilePrefab;
+    protected Stat AttackDelay = new Stat("AttackDelay", 1, 1, 0);
+    private IEnumerator SpawnProjectileCoroutine;
+
+    void Awake() {
+        SpawnProjectileCoroutine = SpawnProjectile();
+        Speed.SetBase(5);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-
+        StartCoroutine(SpawnProjectileCoroutine);
     }
 
     // Update is called once per frame
@@ -24,5 +33,12 @@ public class PlayerController : Controller
             direction += Vector3.down;
         Vector3.Normalize(direction);
         gameObject.GetComponent<Rigidbody>().AddForce(direction * Speed.Value());
+    }
+
+    private IEnumerator SpawnProjectile() {
+        while (true) {
+            Instantiate(ProjectilePrefab, gameObject.transform.position + Vector3.up, Quaternion.identity);
+            yield return new WaitForSeconds(AttackDelay.Value());
+        }
     }
 }

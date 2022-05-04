@@ -110,7 +110,7 @@ public class Map : MonoBehaviour
         if (localRender) {
             subMap = GetMapAroundPixel(x, y, 20);
             foreach (var go in rendered) {
-                DestroyImmediate(go);
+                Destroy(go);
             }
             rendered.Clear();
             renderedSet.Clear();
