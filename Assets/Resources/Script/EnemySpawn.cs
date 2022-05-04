@@ -63,7 +63,6 @@ public class EnemySpawn : MonoBehaviour {
     void Update()
     {
         if (enemies.Count < maxEnemies) {
-            Debug.Log((targetTime - Time.time));
             if ((targetTime - Time.time) < 0) {
                 targetTime = Time.time + interval;
                 Spawn();

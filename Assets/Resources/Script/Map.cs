@@ -217,25 +217,12 @@ public class Map : MonoBehaviour
             8, 11, 10,
             8, 10, 9,
         };
-        
-        // GameObject empty = new GameObject("MeshColliderEmpty");
-
-        // Mesh copyColumnMesh = new Mesh();
-
-        // copyColumnMesh.vertices = columnMesh.vertices.Clone() as Vector3[];
-        // copyColumnMesh.triangles = columnMesh.triangles.Clone() as int[];
-
-        // for (int j = 0; j < copyColumnMesh.vertices.Length; j++) {
-        //     copyColumnMesh.vertices[j] *= 1.2f;
-        // }
-
 
         // generating tile prefabs
         for (int j = 0; j < 4; j++) {
             go = prefab[j];
             go.AddComponent<MeshFilter>();
-            go.AddComponent<MeshRenderer>();
-            go.AddComponent<Renderer>();
+            MeshRenderer rd = go.AddComponent<MeshRenderer>();
             Rigidbody rb = go.AddComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ; 
             go.transform.localScale = new Vector3(1,1,1) * tileSize;
@@ -247,7 +234,7 @@ public class Map : MonoBehaviour
             } else {
                 go.GetComponent<MeshFilter>().mesh = tileMesh;
             }
-            go.GetComponent<Renderer>().material = mats[j];
+            rd.material = mats[j];
             go.SetActive(false);
         }
 

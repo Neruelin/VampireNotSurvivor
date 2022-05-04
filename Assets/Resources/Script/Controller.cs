@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
+    //Speed
+    private Stat Speed = new Stat("Speed", 1, 1, 0);
+    //Health
+    private StatResource Health = new StatResource("Health", 1, 1, 0, 0, 100, 100, 0, 1, 0);
+    public float health = 100;
 
-    public int speed;
-    public int maxHealth = 100;
-    public int health;
     private System.Random rnd = new System.Random();
 
     // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
+        
     }
 
     // Update is called once per frame
@@ -28,6 +30,6 @@ public class Controller : MonoBehaviour
         if (Input.GetKey(KeyCode.S))
             direction += Vector3.down;
         Vector3.Normalize(direction);
-        gameObject.GetComponent<Rigidbody>().AddForce(direction * speed);
+        gameObject.GetComponent<Rigidbody>().AddForce(direction * Speed.Value());
     }
 }

@@ -12,7 +12,6 @@ public class OverlayScript : MonoBehaviour
     void Start()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
-
         Health = root.Q<ProgressBar>("Health");
     }
 
