@@ -20,8 +20,8 @@ public class Controller : MonoBehaviour
         
     }
 
-    public float GetHealthValue() {
-        return Health.Value();
+    public float[] GetHealthInfo() {
+        return new float[] {Health.Value(), Health.Min, Health.Cap};
     }
 
     public void Damage(float amount) {
