@@ -5,8 +5,18 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
     //Stats
-    protected Stat Speed = new Stat("Speed", 1, 1, 0);
-    protected StatResource Health = new StatResource("Health", 1, 1, 0, 0, 100, 100, 0, 1, 0);
+    protected Dictionary<Stat.StatEnum, Stat> StatLookup;
+    protected Dictionary<Stat.StatEnum, StatResource> StatResourceLookup;
+    protected Stat Speed = Stat.Default(Stat.StatEnum.Speed);
+    protected StatResource Health = StatResource.Default(Stat.StatEnum.Health);
+    public bool IsDead = false;
+
+    protected void Awake() {
+        StatLookup = new Dictionary<Stat.StatEnum, Stat>();
+        StatResourceLookup = new Dictionary<Stat.StatEnum, StatResource>();
+        StatLookup.Add(Speed.Tag, Speed);
+        StatResourceLookup.Add(Health.Tag, Health);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -17,20 +27,29 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateStatResources();
+    }
+
+    void UpdateStatResources () {
+        if (IsDead) return;
+        foreach (var item in StatResourceLookup) {
+            item.Value.ApplyDelta(Time.deltaTime);
+        }
     }
 
     public float[] GetHealthInfo() {
         return new float[] {Health.Value(), Health.Min, Health.Cap};
     }
 
-    public void Damage(float amount) {
+    public virtual void Damage(float amount) {
+        if (IsDead) return;
         if (Health.Remove(amount) <= 0) {
             HandleDeath();
         }
     }
 
-    protected void HandleDeath() {
+    protected virtual void HandleDeath() {
+        IsDead = true;
         Destroy(gameObject);
     }
 }
