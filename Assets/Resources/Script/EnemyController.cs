@@ -6,10 +6,11 @@ public class EnemyController : Controller {
 
     public GameObject target = null;
     public int threshold = 5;
-    protected Stat Attack = new Stat("Attack", 10, 1, 0);
+    protected Stat Attack = new Stat(Stat.StatEnum.Attack, 10, 1, 0);
     private Rigidbody rb;
 
-    void Awake() {
+    new void Awake() {
+        base.Awake();
         Speed.SetBase(5);
     }
 
@@ -21,6 +22,7 @@ public class EnemyController : Controller {
 
     // Update is called once per frame
     void FixedUpdate() {
+        if (IsDead) return;
         if (target != null) {
             Vector3 dirToPlayer = target.transform.position - transform.position;
             float distToPlayer = dirToPlayer.magnitude;
@@ -28,18 +30,22 @@ public class EnemyController : Controller {
                 Vector3.Normalize(dirToPlayer);
                 rb.AddForce(dirToPlayer * Speed.Value() * Time.deltaTime);
             }
+        } else {
+            target = GameObject.FindWithTag("Player");
         }
     }
 
     void OnCollisionEnter(Collision collision) {
+        if (IsDead) return;
         if(collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<PlayerController>().Damage(Attack.Value());
+            collision.gameObject.GetComponent<Controller>().Damage(Attack.Value());
         }
     }
 
     void OnCollisionStay(Collision collision) {
+        if (IsDead) return;
         if (collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<PlayerController>().Damage(Attack.Value());
+            collision.gameObject.GetComponent<Controller>().Damage(Attack.Value());
         }
     }
 }

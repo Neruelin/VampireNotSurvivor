@@ -5,12 +5,12 @@ using UnityEngine;
 public class ProjectileController : Controller
 {
     public float TimeToLive = 5;
-    protected Stat Attack = new Stat("Attack", 50, 1, 0);
+    protected Stat Attack = new Stat(Stat.StatEnum.Attack, 50, 1, 0);
     private IEnumerator DespawnCoroutine;
 
     Collider playerBody;
-
-    void Awake() {
+    new void Awake() {
+        base.Awake();
         Speed.SetBase(15);
         DespawnCoroutine = Despawn();
     }
