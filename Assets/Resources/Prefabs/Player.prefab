@@ -230,8 +230,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 260238e64174ebf428fad7543a9959d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
   invincibilityFramesTimer: 1
+  isInvincible: 0
+  ProjectilePrefab: {fileID: 0}
 --- !u!136 &6291162642955369162
 CapsuleCollider:
   m_ObjectHideFlags: 0

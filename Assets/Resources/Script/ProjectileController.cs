@@ -8,8 +8,10 @@ public class ProjectileController : Controller
     protected Stat Attack = new Stat("Attack", 50, 1, 0);
     private IEnumerator DespawnCoroutine;
 
+    Collider playerBody;
+
     void Awake() {
-        Speed.SetBase(5);
+        Speed.SetBase(15);
         DespawnCoroutine = Despawn();
     }
 
@@ -17,15 +19,51 @@ public class ProjectileController : Controller
     void Start()
     {
         StartCoroutine(DespawnCoroutine);
+        SetBulletDirection();
+    }
+
+    
+    void SetBulletDirection()
+    {
+        Vector3 direction = new Vector3(0, 0, 0);
+        if (Input.GetKey(KeyCode.A))
+            direction += Vector3.left;
+        if (Input.GetKey(KeyCode.D))
+            direction += Vector3.right;
+        if (Input.GetKey(KeyCode.W))
+            direction += Vector3.up;
+        if (Input.GetKey(KeyCode.S))
+            direction += Vector3.down;
+        if (!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.D))
+            direction += Vector3.up;
+
+        Vector3.Normalize(direction);
+        Setup(direction);
+    }
+
+    public static float GetAngleFromVectorFloat(Vector3 dir) {
+        dir = Vector3.Normalize(dir);
+        float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (n < 0) n += 360;
+
+        return n;
+    }
+
+    private Vector3 shootDirection;
+    // Start is called before the first frame update
+    public void Setup(Vector3 shootDir)
+    {
+       this.shootDirection = shootDir;
+       transform.eulerAngles = new Vector3(0, 0, ProjectileController.GetAngleFromVectorFloat(shootDir));
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += Vector3.up * Speed.Value() * Time.deltaTime;
+        transform.position += shootDirection * Speed.Value() * Time.deltaTime;
     }
 
-    void OnCollisionEnter(Collision collision) {
+    void OnTriggerEnter(Collider collision) {
         if(collision.gameObject.tag == "Enemy") {
             collision.gameObject.GetComponent<EnemyController>().Damage(Attack.Value());
             HandleDeath();
