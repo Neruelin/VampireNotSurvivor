@@ -8,9 +8,10 @@ public class ProjectileController : Controller
     protected Stat Attack = new Stat(Stat.StatEnum.Attack, 50, 1, 0);
     private IEnumerator DespawnCoroutine;
 
+    Collider playerBody;
     new void Awake() {
         base.Awake();
-        Speed.SetBase(5);
+        Speed.SetBase(15);
         DespawnCoroutine = Despawn();
     }
 
@@ -20,17 +21,40 @@ public class ProjectileController : Controller
         StartCoroutine(DespawnCoroutine);
     }
 
+    
+    public void SetBulletDirection(Vector3 direction) 
+    {
+        Vector3.Normalize(direction);
+        Setup(direction);
+    }
+
+    public static float GetAngleFromVectorFloat(Vector3 dir) {
+        dir = Vector3.Normalize(dir);
+        float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (n < 0) n += 360;
+
+        return n;
+    }
+
+    private Vector3 shootDirection;
+    // Start is called before the first frame update
+    public void Setup(Vector3 shootDir)
+    {
+       this.shootDirection = shootDir;
+       transform.eulerAngles = new Vector3(0, 0, ProjectileController.GetAngleFromVectorFloat(shootDir));
+    }
+
     // Update is called once per frame
     void Update()
     {
-        transform.position += Vector3.up * Speed.Value() * Time.deltaTime;
+        transform.position += shootDirection * Speed.Value() * Time.deltaTime;
     }
 
-    void OnCollisionEnter(Collision collision) {
+    void OnTriggerEnter(Collider collision) {
         if(collision.gameObject.tag == "Enemy") {
             collision.gameObject.GetComponent<EnemyController>().Damage(Attack.Value());
-            HandleDeath();
         }
+        HandleDeath();
     }
 
     private IEnumerator Despawn() {

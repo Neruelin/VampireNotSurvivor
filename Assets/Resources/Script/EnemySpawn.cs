@@ -27,7 +27,10 @@ public class EnemySpawn : MonoBehaviour {
         while (true) {
             yield return new WaitForSeconds(spawnTime);
             if (enemies.Count < maxEnemies) {
-                GameObject go = (GameObject)Instantiate(enemyPrefab, new Vector3(0, 0, -1), Quaternion.identity);
+                Vector3 position = new Vector3();
+                position += transform.position;
+                position.z = -1;
+                GameObject go = (GameObject)Instantiate(enemyPrefab, position, Quaternion.identity);
                 go.SetActive(true);
                 go.transform.SetParent(enemyParent.transform);
                 enemies.Add(go);

@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 260238e64174ebf428fad7543a9959d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsDead: 0
   invincibilityFramesTimer: 1
   isInvincible: 0
   ProjectilePrefab: {fileID: 0}
@@ -202,11 +203,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6c0542e8960812e4e9b168aa41ffe196, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6c0542e8960812e4e9b168aa41ffe196, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6c0542e8960812e4e9b168aa41ffe196, type: 3}
       propertyPath: m_LocalRotation.y
@@ -214,11 +215,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6c0542e8960812e4e9b168aa41ffe196, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6c0542e8960812e4e9b168aa41ffe196, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6c0542e8960812e4e9b168aa41ffe196, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -226,7 +227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6c0542e8960812e4e9b168aa41ffe196, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6c0542e8960812e4e9b168aa41ffe196, type: 3}
       propertyPath: m_ConstrainProportionsScale
