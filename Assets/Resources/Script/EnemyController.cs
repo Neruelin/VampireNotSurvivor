@@ -6,6 +6,7 @@ public class EnemyController : Controller {
 
     public GameObject target = null;
     public int threshold = 1;
+    public float HealthOverride = 1;
     protected Stat Attack = new Stat(Stat.StatEnum.Attack, 10, 1, 0);
     private Rigidbody rb;
     private float DefaultDrag;
@@ -13,6 +14,8 @@ public class EnemyController : Controller {
     new void Awake() {
         base.Awake();
         Speed.SetBase(15);
+        StatResourceLookup[Stat.StatEnum.Health].SetValues(HealthOverride, 1, 0, 0, HealthOverride, HealthOverride);
+        StatResourceLookup[Stat.StatEnum.Health].Set(HealthOverride);
     }
 
     // Start is called before the first frame update

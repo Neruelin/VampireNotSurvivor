@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProjectileController : Controller
 {
     public float TimeToLive = 5;
-    protected Stat Attack = new Stat(Stat.StatEnum.Attack, 50, 1, 0);
+    protected Stat Attack = new Stat(Stat.StatEnum.Attack, 10, 1, 0);
     private IEnumerator DespawnCoroutine;
 
     Collider playerBody;
@@ -21,11 +21,8 @@ public class ProjectileController : Controller
         StartCoroutine(DespawnCoroutine);
     }
 
-    
-    public void SetBulletDirection(Vector3 direction) 
-    {
-        Vector3.Normalize(direction);
-        Setup(direction);
+    public void Setup(float Speed) {
+        this.Speed.SetBase(Speed);
     }
 
     public static float GetAngleFromVectorFloat(Vector3 dir) {
@@ -36,25 +33,17 @@ public class ProjectileController : Controller
         return n;
     }
 
-    private Vector3 shootDirection;
-    // Start is called before the first frame update
-    public void Setup(Vector3 shootDir)
-    {
-       this.shootDirection = shootDir;
-       transform.eulerAngles = new Vector3(0, 0, ProjectileController.GetAngleFromVectorFloat(shootDir));
-    }
-
     // Update is called once per frame
     void Update()
     {
-        transform.position += shootDirection * Speed.Value() * Time.deltaTime;
+        transform.position += transform.right * Speed.Value() * Time.deltaTime;
     }
 
     void OnTriggerEnter(Collider collision) {
         if(collision.gameObject.tag == "Enemy") {
             collision.gameObject.GetComponent<EnemyController>().Damage(Attack.Value());
         }
-        HandleDeath();
+        // HandleDeath();
     }
 
     private IEnumerator Despawn() {
