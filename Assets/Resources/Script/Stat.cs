@@ -121,7 +121,7 @@ public class StatResource : Stat {
     }
 
     public void ApplyDelta(float seconds) {
-        this.Current = Math.Min(this.Cap, Math.Max( this.Min, (this.Current + this.Delta.Value())));
+        this.Current = Math.Min(this.Cap, Math.Max( this.Min, (this.Current + (this.Delta.Value() * seconds))));
     }
 
     public new float Value() {
@@ -153,6 +153,7 @@ public class StatResource : Stat {
         Cap = NewCap;
         Initial = NewInitial;
     }
+    
     public void SetMin(float amount) {
         Min = amount;
     }

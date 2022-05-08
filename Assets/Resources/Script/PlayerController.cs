@@ -9,20 +9,25 @@ public class PlayerController : Controller {
     public GameObject ProjectilePrefab;
     private GameObject PlayerModel;
     protected Stat AttackDelay = Stat.Default(Stat.StatEnum.AttackDelay);
+    protected Stat Attack = Stat.Default(Stat.StatEnum.Attack);
     private IEnumerator SpawnProjectileCoroutine;
     private Rigidbody rb;
     private float DefaultDrag;
     private bool InControl = true;
+    private SprayAttack SAtk;
 
     new void Awake() {
         base.Awake();
         StatLookup.Add(AttackDelay.Tag, AttackDelay);
+        StatLookup.Add(Attack.Tag, Attack);
         StatResourceLookup[Stat.StatEnum.Health].SetValues(100, 1, 0, 0, 100, 100);
         StatResourceLookup[Stat.StatEnum.Health].Set(100);
         AttackDelay.SetBase(0.2f);
         SpawnProjectileCoroutine = SpawnProjectile();
         Speed.SetBase(5);
         PlayerModel = transform.Find("tinker_original").gameObject;
+        SAtk = gameObject.AddComponent<SprayAttack>();
+        SAtk.Setup(gameObject, ProjectilePrefab);
         // isInvincible = true;
         // StartCoroutine(RemoveInvincibility());
     }
@@ -32,7 +37,7 @@ public class PlayerController : Controller {
     {
         rb = GetComponent<Rigidbody>();
         DefaultDrag = rb.drag;
-        StartCoroutine(SpawnProjectileCoroutine);
+        // StartCoroutine(SpawnProjectileCoroutine);
     }
 
     // Update is called once per frame
@@ -51,13 +56,15 @@ public class PlayerController : Controller {
 
         if (direction == Vector3.zero) {
             rb.drag = DefaultDrag * 5;
-            direction = Vector3.up;
-            PlayerModel.transform.eulerAngles = new Vector3(0, 0, 90 + ProjectileController.GetAngleFromVectorFloat(direction));
+            direction = Vector3.right;
+            PlayerModel.transform.eulerAngles = new Vector3(0, 0, ProjectileController.GetAngleFromVectorFloat(direction));
         } else {
             Vector3.Normalize(direction);
-            PlayerModel.transform.eulerAngles = new Vector3(0, 0, 90 + ProjectileController.GetAngleFromVectorFloat(direction));
+            PlayerModel.transform.eulerAngles = new Vector3(0, 0, ProjectileController.GetAngleFromVectorFloat(direction));
             rb.AddForce(direction * Speed.Value());
         }
+
+        if (SAtk.Ready) SAtk.Fire(direction);
     }
 
     private IEnumerator SpawnProjectile() {
@@ -74,19 +81,35 @@ public class PlayerController : Controller {
                 direction += Vector3.down;
             Vector3.Normalize(direction);
             if (direction == Vector3.zero) {
-                direction = Vector3.up;
+                direction = Vector3.right;
             }
             Vector3 position = new Vector3();
             position += direction;
             position *= 0.1f;
             position += gameObject.transform.position;
             position.z = -3;
-            GameObject projObject = Instantiate(ProjectilePrefab, position, Quaternion.identity);
-            projObject.GetComponent<ProjectileController>().SetBulletDirection(direction);
+
+            GameObject projObject = Instantiate(ProjectilePrefab, position, DirToZQuat(direction));
+
             yield return new WaitForSeconds(AttackDelay.Value());
         }
     }
-  
+
+    public static Quaternion DirToZQuat (Vector3 direction) {
+        float angle = GetAngleFromVectorFloat(direction);
+        Quaternion QDirection = new Quaternion();
+        QDirection.eulerAngles = new Vector3(0,0,angle);
+        return QDirection;
+    }
+
+    public static float GetAngleFromVectorFloat(Vector3 dir) {
+        dir = Vector3.Normalize(dir);
+        float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (n < 0) n += 360;
+
+        return n;
+    }
+
     public override void Damage (float amount) {
         if (IsDead) return;
         if (!isInvincible) {
@@ -106,13 +129,5 @@ public class PlayerController : Controller {
         InControl = false;
         IsDead = true;
         PlayerModel.transform.eulerAngles = new Vector3(0, 90, 0);
-    }
-
-    public static float GetAngleFromVectorFloat(Vector3 dir) {
-        dir = Vector3.Normalize(dir);
-        float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        if (n < 0) n += 360;
-
-        return n;
     }
 }

@@ -5,10 +5,10 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
     //Stats
-    protected Dictionary<Stat.StatEnum, Stat> StatLookup;
-    protected Dictionary<Stat.StatEnum, StatResource> StatResourceLookup;
+    public Dictionary<Stat.StatEnum, Stat> StatLookup;
+    public Dictionary<Stat.StatEnum, StatResource> StatResourceLookup;
     protected Stat Speed = Stat.Default(Stat.StatEnum.Speed);
-    protected StatResource Health = StatResource.Default(Stat.StatEnum.Health);
+    public StatResource Health = StatResource.Default(Stat.StatEnum.Health);
     public bool IsDead = false;
 
     protected void Awake() {
