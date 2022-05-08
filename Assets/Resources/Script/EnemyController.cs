@@ -5,18 +5,20 @@ using UnityEngine;
 public class EnemyController : Controller {
 
     public GameObject target = null;
-    public int threshold = 5;
+    public int threshold = 1;
     protected Stat Attack = new Stat(Stat.StatEnum.Attack, 10, 1, 0);
     private Rigidbody rb;
+    private float DefaultDrag;
 
     new void Awake() {
         base.Awake();
-        Speed.SetBase(5);
+        Speed.SetBase(15);
     }
 
     // Start is called before the first frame update
     void Start() {
         rb = GetComponent<Rigidbody>();
+        DefaultDrag = rb.drag;
         target = GameObject.FindWithTag("Player");
     }
 
@@ -24,14 +26,18 @@ public class EnemyController : Controller {
     void FixedUpdate() {
         if (IsDead) return;
         if (target != null) {
+            rb.drag = DefaultDrag; 
             Vector3 dirToPlayer = target.transform.position - transform.position;
             float distToPlayer = dirToPlayer.magnitude;
             if (distToPlayer > threshold) {
                 Vector3.Normalize(dirToPlayer);
                 rb.AddForce(dirToPlayer * Speed.Value() * Time.deltaTime);
+            } else {
+                rb.drag = DefaultDrag * 5;
             }
         } else {
             target = GameObject.FindWithTag("Player");
+            rb.drag = DefaultDrag * 5;
         }
     }
 

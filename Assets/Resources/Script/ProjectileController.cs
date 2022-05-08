@@ -19,24 +19,11 @@ public class ProjectileController : Controller
     void Start()
     {
         StartCoroutine(DespawnCoroutine);
-        SetBulletDirection();
     }
 
     
-    void SetBulletDirection()
+    public void SetBulletDirection(Vector3 direction) 
     {
-        Vector3 direction = new Vector3(0, 0, 0);
-        if (Input.GetKey(KeyCode.A))
-            direction += Vector3.left;
-        if (Input.GetKey(KeyCode.D))
-            direction += Vector3.right;
-        if (Input.GetKey(KeyCode.W))
-            direction += Vector3.up;
-        if (Input.GetKey(KeyCode.S))
-            direction += Vector3.down;
-        if (!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.D))
-            direction += Vector3.up;
-
         Vector3.Normalize(direction);
         Setup(direction);
     }
@@ -66,8 +53,8 @@ public class ProjectileController : Controller
     void OnTriggerEnter(Collider collision) {
         if(collision.gameObject.tag == "Enemy") {
             collision.gameObject.GetComponent<EnemyController>().Damage(Attack.Value());
-            HandleDeath();
         }
+        HandleDeath();
     }
 
     private IEnumerator Despawn() {

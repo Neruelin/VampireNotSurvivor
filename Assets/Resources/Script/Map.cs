@@ -18,6 +18,7 @@ public class Map : MonoBehaviour
     public Material[] mats = new Material[4];
 
     public bool localRender = false;
+    public bool UseColumns = true;
 
     int Get(int q, int r) {
         string key = "" + q + "," + r;
@@ -30,7 +31,12 @@ public class Map : MonoBehaviour
     void GenerateTile(int q,  int r) {
         string key = "" + q + "," + r;
         // tiles.Add(key, defaultTile);
-        tiles.Add(key, rnd.Next() % prefab.Length);
+        if (UseColumns) {
+            tiles.Add(key, rnd.Next() % prefab.Length);
+        } else {
+            //column is last prefab
+            tiles.Add(key, rnd.Next() % (prefab.Length - 1));
+        }
     }
 
     double[] axial2Cube(double q, double r) {
