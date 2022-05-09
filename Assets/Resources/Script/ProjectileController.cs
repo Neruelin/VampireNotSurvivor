@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,24 +6,35 @@ using UnityEngine;
 public class ProjectileController : Controller
 {
     public float TimeToLive = 5;
-    protected Stat Attack = new Stat(Stat.StatEnum.Attack, 10, 1, 0);
-    private IEnumerator DespawnCoroutine;
+    public float BaseSpeed = 15;
+    public float BaseAttack = 10;
+    public int Penetrations = 0;
+    public GameObject User;
 
     Collider playerBody;
     new void Awake() {
         base.Awake();
-        Speed.SetBase(15);
-        DespawnCoroutine = Despawn();
+        Stat Speed = Stats[(int) Stat.StatEnum.Speed];
+        Speed.SetBase(BaseSpeed);
+
+        Stat Attack = Stats[(int) Stat.StatEnum.Attack];
+        Attack.SetBase(BaseAttack);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(DespawnCoroutine);
+        StartCoroutine(Despawn());
     }
 
-    public void Setup(float Speed) {
-        this.Speed.SetBase(Speed);
+    public void Setup(GameObject User, float NewSpeed, Stat[] UserStats) {
+        Stat Speed = Stats[(int) Stat.StatEnum.Speed];
+        Speed.SetBase(NewSpeed);
+        Stat Attack = Stats[(int) Stat.StatEnum.Attack];
+        Attack.SetBase(UserStats[(int) Stat.StatEnum.Attack].Value());
+        Stat Penetration = Stats[(int) Stat.StatEnum.Penetration];
+        Penetration.SetBase((int) Math.Ceiling(UserStats[(int) Stat.StatEnum.Penetration].Value()));
+        this.User = User;
     }
 
     public static float GetAngleFromVectorFloat(Vector3 dir) {
@@ -36,18 +48,37 @@ public class ProjectileController : Controller
     // Update is called once per frame
     void Update()
     {
+        if (IsDead) return;
+        Stat Speed = Stats[(int) Stat.StatEnum.Speed];
         transform.position += transform.right * Speed.Value() * Time.deltaTime;
     }
 
     void OnTriggerEnter(Collider collision) {
+        if (IsDead) return;
+        Stat Attack = Stats[(int) Stat.StatEnum.Attack];
+        Stat Penetration = Stats[(int) Stat.StatEnum.Penetration];
+        
         if(collision.gameObject.tag == "Enemy") {
-            collision.gameObject.GetComponent<EnemyController>().Damage(Attack.Value());
+            collision.gameObject.GetComponent<EnemyController>().Damage(User, Attack.Value());
+            Penetrations++;
+            if (Penetrations >= Penetration.Value()) {
+                StartCoroutine(EmitAndDie());
+            } else {
+                gameObject.GetComponent<ParticleSystem>().Emit(25);
+            }
         }
-        // HandleDeath();
     }
 
     private IEnumerator Despawn() {
         yield return new WaitForSeconds(TimeToLive);
+        HandleDeath();
+    }
+
+    IEnumerator EmitAndDie() {
+        IsDead = true;
+        gameObject.GetComponent<ParticleSystem>().Emit(25);
+        transform.GetChild(0).gameObject.SetActive(false);
+        yield return new WaitForSeconds(1);
         HandleDeath();
     }
 }

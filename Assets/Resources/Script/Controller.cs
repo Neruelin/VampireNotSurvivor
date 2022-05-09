@@ -1,21 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
-    //Stats
-    public Dictionary<Stat.StatEnum, Stat> StatLookup;
-    public Dictionary<Stat.StatEnum, StatResource> StatResourceLookup;
-    protected Stat Speed = Stat.Default(Stat.StatEnum.Speed);
-    public StatResource Health = StatResource.Default(Stat.StatEnum.Health);
+    public Stat[] Stats = new Stat[Enum.GetNames(typeof(Stat.StatEnum)).Length];
+    public StatResource[] Resources = new StatResource[Enum.GetNames(typeof(StatResource.ResourceEnum)).Length];
+    public List<Effect> ActiveEffects = new List<Effect>();
+    public int Kills = 0;
     public bool IsDead = false;
 
     protected void Awake() {
-        StatLookup = new Dictionary<Stat.StatEnum, Stat>();
-        StatResourceLookup = new Dictionary<Stat.StatEnum, StatResource>();
-        StatLookup.Add(Speed.Tag, Speed);
-        StatResourceLookup.Add(Health.Tag, Health);
+        foreach (Stat.StatEnum type in Enum.GetValues(typeof(Stat.StatEnum))) {
+            Stats[(int) type] = Stat.Default(type);
+        }
+        foreach (StatResource.ResourceEnum type in Enum.GetValues(typeof(StatResource.ResourceEnum))) {
+            Resources[(int) type] = StatResource.Default(type);
+        }
     }
 
     // Start is called before the first frame update
@@ -32,20 +34,52 @@ public class Controller : MonoBehaviour
 
     void UpdateStatResources () {
         if (IsDead) return;
-        foreach (var item in StatResourceLookup) {
-            item.Value.ApplyDelta(Time.deltaTime);
+        foreach (StatResource item in Resources) {
+            item.ApplyDelta(Time.deltaTime);
         }
+    }
+
+    public void AddEffect(Effect eff) {
+        ActiveEffects.Add(eff);
+        eff.Apply(this);
+    }
+
+    public void RemoveEffect(int position) {
+        ActiveEffects[position].Remove(this);
+        ActiveEffects.RemoveAt(position);
+    }
+
+    public void ResetEffects() {
+        ActiveEffects = new List<Effect>();
+        ResetStats();
+        ResetResources();
+    }
+
+    void ResetStats() {
+        foreach (Stat item in Stats) { item.Reset(); }
+    }
+
+    void ResetResources() {
+        foreach (StatResource item in Resources) { item.Reset(); }
     }
 
     public float[] GetHealthInfo() {
+        StatResource Health = Resources[(int) StatResource.ResourceEnum.Health];
         return new float[] {Health.Value(), Health.Min, Health.Cap};
     }
 
-    public virtual void Damage(float amount) {
+    public virtual void Damage(GameObject Attacker, float amount) {
+        StatResource Health = Resources[(int) StatResource.ResourceEnum.Health];
         if (IsDead) return;
         if (Health.Remove(amount) <= 0) {
+            Attacker.GetComponent<Controller>().OnKill(gameObject);
             HandleDeath();
         }
+    }
+
+    public virtual void OnKill(GameObject target) {
+        Debug.Log(gameObject.name + " killed " + target.name);
+        Kills++;
     }
 
     protected virtual void HandleDeath() {

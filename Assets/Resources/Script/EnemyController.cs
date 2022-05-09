@@ -7,15 +7,20 @@ public class EnemyController : Controller {
     public GameObject target = null;
     public int threshold = 1;
     public float HealthOverride = 1;
-    protected Stat Attack = new Stat(Stat.StatEnum.Attack, 10, 1, 0);
     private Rigidbody rb;
     private float DefaultDrag;
 
     new void Awake() {
         base.Awake();
+        Stat Speed = Stats[(int) Stat.StatEnum.Speed];
         Speed.SetBase(15);
-        StatResourceLookup[Stat.StatEnum.Health].SetValues(HealthOverride, 1, 0, 0, HealthOverride, HealthOverride);
-        StatResourceLookup[Stat.StatEnum.Health].Set(HealthOverride);
+
+        Stat Attack = Stats[(int) Stat.StatEnum.Attack];
+        Attack.SetValues(10, 1, 0);
+
+        StatResource Health = Resources[(int) StatResource.ResourceEnum.Health];
+        Health.SetValues(HealthOverride, 1, 0, 0, HealthOverride);
+        Health.Set(HealthOverride);
     }
 
     // Start is called before the first frame update
@@ -28,6 +33,8 @@ public class EnemyController : Controller {
     // Update is called once per frame
     void FixedUpdate() {
         if (IsDead) return;
+        Stat Speed = Stats[(int) Stat.StatEnum.Speed];
+
         if (target != null) {
             rb.drag = DefaultDrag; 
             Vector3 dirToPlayer = target.transform.position - transform.position;
@@ -46,15 +53,19 @@ public class EnemyController : Controller {
 
     void OnCollisionEnter(Collision collision) {
         if (IsDead) return;
+        Stat Attack = Stats[(int) Stat.StatEnum.Attack];
+
         if(collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<Controller>().Damage(Attack.Value());
+            collision.gameObject.GetComponent<Controller>().Damage(gameObject, Attack.Value());
         }
     }
 
     void OnCollisionStay(Collision collision) {
         if (IsDead) return;
+        Stat Attack = Stats[(int) Stat.StatEnum.Attack];
+
         if (collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<Controller>().Damage(Attack.Value());
+            collision.gameObject.GetComponent<Controller>().Damage(gameObject, Attack.Value());
         }
     }
 }

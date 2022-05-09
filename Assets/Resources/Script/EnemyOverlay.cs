@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class EnemyOverlay : MonoBehaviour
 {
     Slider HealthSlider;
-    Controller EnemyController;
+    Controller EnemyCon;
     // Text HealthText;
     
     // Start is called before the first frame update
     void Start()
     {
-        EnemyController = gameObject.GetComponent<Controller>();
+        EnemyCon = gameObject.GetComponent<Controller>();
         Component[] sliderObjects = GetComponentsInChildren(typeof(Slider), true);
         // Component[] textObjects = GetComponentsInChildren(typeof(Text), true);
 
@@ -42,7 +42,7 @@ public class EnemyOverlay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float[] healthInfo = EnemyController.GetHealthInfo();
+        float[] healthInfo = EnemyCon.GetHealthInfo();
         SetPercent(healthInfo[0] / healthInfo[2]);
         // SetText("" + healthInfo[0] + " / " + healthInfo[2]);
     }

@@ -8,10 +8,13 @@ public class OverlayScript : MonoBehaviour
     Slider HealthSlider;
     Text HealthText;
     public GameObject player;
+    Controller PlayerCon;
     
     // Start is called before the first frame update
     void Start()
     {
+        PlayerCon = player.GetComponent<Controller>();
+
         Component[] sliderObjects = GetComponentsInChildren(typeof(Slider), true);
         Component[] textObjects = GetComponentsInChildren(typeof(Text), true);
 
@@ -41,7 +44,7 @@ public class OverlayScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float[] healthInfo = player.GetComponent<Controller>().GetHealthInfo();
+        float[] healthInfo = PlayerCon.GetHealthInfo();
         SetPercent(healthInfo[0] / healthInfo[2]);
         SetText("" + healthInfo[0] + " / " + healthInfo[2]);
     }
