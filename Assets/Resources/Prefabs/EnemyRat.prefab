@@ -447,10 +447,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -6743218803001650385, guid: f4d311b16bd0a3a4081f9022cf017570, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f73805ae413ebbf4cb9dcea5f828a620, type: 2}
     - target: {fileID: 919132149155446097, guid: f4d311b16bd0a3a4081f9022cf017570, type: 3}
       propertyPath: m_Name
       value: tinker (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7842296094312294292, guid: f4d311b16bd0a3a4081f9022cf017570, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 904d2dfd3090d7548b7f69708f07b245, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4d311b16bd0a3a4081f9022cf017570, type: 3}
 --- !u!1001 &6158157416375142612
