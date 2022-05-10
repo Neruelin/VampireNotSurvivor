@@ -77,9 +77,18 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public float GetLevelInfo() {
+        Stat Experience = Stats[(int) Stat.StatEnum.Experience];
+        return (float) Experience.Value();
+
+    }
+
     public virtual void OnKill(GameObject target) {
         Debug.Log(gameObject.name + " killed " + target.name);
         Kills++;
+        // On Kill, add +10 experience to Killer
+        Stat Experience = Stats[(int) Stat.StatEnum.Experience];
+        Experience.Add(10);
     }
 
     protected virtual void HandleDeath() {

@@ -128,3 +128,43 @@ public class PenetrationMultEffect : Effect {
         Penetration.SetFlat(Penetration.Value() / Amount);
     }
 }
+
+public class LevelUpEffectFactory {
+    public static Effect MakeEffect(bool flat, float amount){
+        if(flat){
+            return new LevelUpFlatEffect(amount);
+        } else {
+            return new LevelUpMultEffect(amount);
+        }
+    }
+}
+
+public class LevelUpFlatEffect : Effect {
+    public float Amount = 5; // 5 exp
+    public LevelUpFlatEffect(float amount){
+        Amount = amount; //also can do this.Amount = amount
+    }
+    public override void Apply (Controller Target) {
+        Stat Experience = Target.Stats[(int) Stat.StatEnum.Experience];
+        Experience.SetFlat(Experience.Value + amount);
+    }
+    public override void Remove (Controller Target){
+        Stat Experience = Target.Stats[(int) Stat.StatEnum.Experience];
+        Experience.SetFlat(Experience.Value - amount);
+    }
+}
+
+public class LevelUpMultEffect : Effect {
+    public gloat Amount = 1.5f;
+    public LevelUpMultEffect (float amount){
+            Amount = amount;
+    }
+    public override void Apply (Controller Target) {
+        Stat Experience = Target.Stats[(int) Stat.StatEnum.Experience];
+        Experience.SetFlat(Experience.Value() * Amount);
+    }
+    public override void Remove (Controller Target) {
+        Stat Experience = Target.Stats[(int) Stat.StatEnum.Experience];
+        Experience.SetFlat(Experience.Value() / Amount);
+    }
+}
