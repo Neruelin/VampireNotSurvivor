@@ -22,9 +22,17 @@ public class ProjectileController : Controller
     }
 
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
         StartCoroutine(Despawn());
+    }
+
+    // Update is called once per frame
+    new void Update()
+    {
+        if (IsDead) return;
+        Stat Speed = Stats[(int) Stat.StatEnum.Speed];
+        transform.position += transform.right * Speed.Value() * Time.deltaTime;
     }
 
     public void Setup(GameObject User, float NewSpeed, Stat[] UserStats) {
@@ -43,14 +51,6 @@ public class ProjectileController : Controller
         if (n < 0) n += 360;
 
         return n;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (IsDead) return;
-        Stat Speed = Stats[(int) Stat.StatEnum.Speed];
-        transform.position += transform.right * Speed.Value() * Time.deltaTime;
     }
 
     void OnTriggerEnter(Collider collision) {

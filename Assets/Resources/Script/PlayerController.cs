@@ -12,6 +12,7 @@ public class PlayerController : Controller {
     private float DefaultDrag;
     private bool InControl = true;
     public float HealthOverride = 100;
+    private Vector3 Direction = Vector3.right;
     private SprayAttack SAtk;
 
     new void Awake() {
@@ -36,14 +37,16 @@ public class PlayerController : Controller {
     }
 
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
+        base.Start();
         rb = GetComponent<Rigidbody>();
         DefaultDrag = rb.drag;
     }
 
     // Update is called once per frame
-    void Update() {
+    new void Update() {
+        base.Update();
         if (IsDead) return;
         Stat Speed = Stats[(int) Stat.StatEnum.Speed];
         Vector3 direction = new Vector3(0, 0, 0);
@@ -57,16 +60,17 @@ public class PlayerController : Controller {
         }
 
         if (direction == Vector3.zero) {
-            rb.drag = DefaultDrag * 5;
-            direction = Vector3.right;
-            PlayerModel.transform.eulerAngles = new Vector3(0, 0, ProjectileController.GetAngleFromVectorFloat(direction));
+            rb.drag = DefaultDrag * 25;
+            // direction = Vector3.right;
+            // PlayerModel.transform.eulerAngles = new Vector3(0, 0, ProjectileController.GetAngleFromVectorFloat(direction));
         } else {
-            Vector3.Normalize(direction);
-            PlayerModel.transform.eulerAngles = new Vector3(0, 0, ProjectileController.GetAngleFromVectorFloat(direction));
-            rb.AddForce(direction * Speed.Value());
+            Direction = direction.normalized;
+            rb.velocity = Direction * Speed.Value();
         }
+        
+        PlayerModel.transform.eulerAngles = new Vector3(0, 0, ProjectileController.GetAngleFromVectorFloat(Direction));
 
-        if (SAtk.Ready) SAtk.Fire(direction);
+        if (SAtk.Ready) SAtk.Fire(Direction);
     }
 
     public static Quaternion DirToZQuat (Vector3 direction) {
