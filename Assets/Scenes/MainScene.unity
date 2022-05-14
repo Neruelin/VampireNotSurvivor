@@ -675,6 +675,14 @@ PrefabInstance:
       propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5153893105870942924, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153893105870942924, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.04
+      objectReference: {fileID: 0}
     - target: {fileID: 5500623437718899102, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -910,7 +918,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pooledProjectiles: []
   projectileToPool: {fileID: 2254049951965733170, guid: be5bc9e1bd259c34aa1c753795dc5cad, type: 3}
-  amountToPool: 200
+  amountToPool: 400
 --- !u!4 &1701855145
 Transform:
   m_ObjectHideFlags: 0
@@ -980,7 +988,7 @@ PrefabInstance:
       objectReference: {fileID: 1271106305}
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: tileSize
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: UseColumns
@@ -992,7 +1000,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: renderRadius
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: spawnEnemies
