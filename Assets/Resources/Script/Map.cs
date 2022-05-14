@@ -19,7 +19,9 @@ public class Map : MonoBehaviour
     public float tileSize = 1;
     public bool localRender = false;
     public int renderRadius = 15;
-
+    [SerializeField]
+    private bool spawnEnemies = false;
+    
     int Get(int q, int r) {
         string key = "" + q + "," + r;
         if (!tiles.ContainsKey(key)) {
@@ -168,7 +170,11 @@ public class Map : MonoBehaviour
 
     void Awake() {        
         prefab = new GameObject[4];
-        distribution = new float[4] {0.3f, 0.3f, 0.39f, 0.01f};
+        if(spawnEnemies){
+            distribution = new float[4] {0.3f, 0.3f, 0.39f, 0.01f};
+        }else{
+            distribution = new float[3] {0.3f, 0.3f, 0.4f};
+        }
         string[] tileAddresses = new string[4] {"Prefabs/Tile_brown", "Prefabs/Tile_green", "Prefabs/Tile_grey", "Prefabs/Tile_enemyspawner"};
         Vector3 scale = new Vector3(1,1,1);
         scale *= tileSize;
