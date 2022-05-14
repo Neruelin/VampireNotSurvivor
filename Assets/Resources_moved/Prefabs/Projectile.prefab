@@ -114,8 +114,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d86c76565845c224d95b3a278dbcf7a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Kills: 0
   IsDead: 0
   TimeToLive: 5
+  BaseSpeed: 15
+  BaseAttack: 10
+  Penetrations: 0
+  User: {fileID: 0}
 --- !u!96 &23169629017308158
 TrailRenderer:
   serializedVersion: 2

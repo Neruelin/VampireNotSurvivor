@@ -133,10 +133,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 260238e64174ebf428fad7543a9959d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Kills: 0
   IsDead: 0
   invincibilityFramesTimer: 1
   isInvincible: 0
   ProjectilePrefab: {fileID: 0}
+  HealthOverride: 100
 --- !u!136 &6291162642955369162
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -333,6 +335,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 6c0542e8960812e4e9b168aa41ffe196, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a443c8e75ce408746b00713dac9b99d3, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0542e8960812e4e9b168aa41ffe196, type: 3}
       propertyPath: m_Name
       value: tinker_original
