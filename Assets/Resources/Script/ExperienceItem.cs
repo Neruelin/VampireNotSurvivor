@@ -5,11 +5,10 @@ using UnityEngine;
 public class ExperienceItem : Item
 {
     public float experience;
-    public override void Add(Inventory inventory){
-        inventory.GainExperience(experience);
+    public override void OnPickUp(Inventory inventory){
     }
 
-    public override void Remove(Inventory inventory){
+    public override void OnRemove(Inventory inventory){
 
     }
 }
