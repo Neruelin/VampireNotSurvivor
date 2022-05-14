@@ -36,7 +36,13 @@ public class SprayAttack : MonoBehaviour, Attack {
                 Vector3 ProjPosition = new Vector3();
                 ProjPosition += User.transform.position + (direction * 0.1f);
                 ProjPosition.z = -3;
-                GameObject ProjObject = GameObject.Instantiate(ProjectilePrefab, ProjPosition, QDirection);
+                // GameObject ProjObject = GameObject.Instantiate(ProjectilePrefab, ProjPosition, QDirection);
+                GameObject ProjObject = ProjectilePool.SharedInstance.GetPooledProjectile();
+                if(ProjObject != null){
+                    ProjObject.transform.position = ProjPosition;
+                    ProjObject.transform.rotation = QDirection;
+                    ProjObject.SetActive(true); 
+                }
                 ProjObject.GetComponent<ProjectileController>().Setup(User, 50, UserStats);
             }
             Ready = false;

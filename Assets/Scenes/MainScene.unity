@@ -879,6 +879,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1351992904}
   m_CullTransparentMesh: 1
+--- !u!1 &1701855143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1701855145}
+  - component: {fileID: 1701855144}
+  m_Layer: 0
+  m_Name: ProjectilePool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1701855144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701855143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611ee3489e9f6304eb0d9af0bdb5817b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pooledProjectiles: []
+  projectileToPool: {fileID: 2254049951965733170, guid: be5bc9e1bd259c34aa1c753795dc5cad, type: 3}
+  amountToPool: 200
+--- !u!4 &1701855145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701855143}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.354143, y: 48.629017, z: 10.167375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2140458682
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,11 +988,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: localRender
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: renderRadius
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
+      propertyPath: spawnEnemies
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: mats.Array.data[0]

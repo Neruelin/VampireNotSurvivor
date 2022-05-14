@@ -81,4 +81,8 @@ public class ProjectileController : Controller
         yield return new WaitForSeconds(1);
         HandleDeath();
     }
+
+    protected new void HandleDeath() {
+        gameObject.SetActive(false);
+    }
 }
