@@ -19,6 +19,7 @@ public class Map : MonoBehaviour
     public float tileSize = 1;
     public bool localRender = false;
     public bool rat = false;
+    public bool column = false;
     public int renderRadius = 15;
 
     int Get(int q, int r) {
@@ -178,8 +179,10 @@ public class Map : MonoBehaviour
         if (rat) {
             distribution = new float[4] {0.25f, 0.35f, 0.39f, 0.01f};
         }
-        // string[] tileAddresses = new string[4] {"Prefabs/Tile_brown", "Prefabs/Tile_green", "Prefabs/HexTile", "Prefabs/Tile_enemyspawner"};
         string[] tileAddresses = new string[4] {"Prefabs/Tile_brown", "Prefabs/Tile_green", "Prefabs/Tile_grey", "Prefabs/Tile_enemyspawner"};
+        if (column) {
+            tileAddresses = new string[4] {"Prefabs/Tile_brown", "Prefabs/Tile_green", "Prefabs/HexTile", "Prefabs/Tile_enemyspawner"};
+        }
         Vector3 scale = new Vector3(1,1,1);
         scale *= tileSize;
         int idx = 0;

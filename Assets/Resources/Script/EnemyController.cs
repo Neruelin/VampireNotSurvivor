@@ -42,8 +42,6 @@ public class EnemyController : Controller {
             float distToPlayer = dirToPlayer.magnitude;
             if (distToPlayer > threshold) {
                 Vector3.Normalize(dirToPlayer);
-                Debug.Log(dirToPlayer);
-                Debug.Log(Speed.Value());
                 rb.velocity = dirToPlayer * Speed.Value() * Time.deltaTime;
             } else {
                 rb.drag = DefaultDrag * 5;

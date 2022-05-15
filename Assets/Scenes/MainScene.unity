@@ -700,6 +700,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5500623438296634556, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: AutoAttack
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500623438296634556, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: ProjectilePrefab
       value: 
       objectReference: {fileID: 2254049951965733170, guid: be5bc9e1bd259c34aa1c753795dc5cad, type: 3}
@@ -725,7 +729,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5500623438296634559, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5500623438296634559, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: m_LocalRotation.w

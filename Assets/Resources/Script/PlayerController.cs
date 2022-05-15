@@ -14,6 +14,7 @@ public class PlayerController : Controller {
     public float HealthOverride = 100;
     private Vector3 Direction = Vector3.right;
     private SprayAttack SAtk;
+    public bool AutoAttack = false;
 
     new void Awake() {
         base.Awake();
@@ -77,7 +78,7 @@ public class PlayerController : Controller {
         
         PlayerModel.transform.eulerAngles += DirectionCorrection * Time.deltaTime * 10;
 
-        // if (SAtk.Ready) SAtk.Fire(PlayerModel.transform.right);
+        if (AutoAttack && SAtk.Ready) SAtk.Fire(PlayerModel.transform.right);
     }
 
     public static Quaternion DirToZQuat (Vector3 direction) {
