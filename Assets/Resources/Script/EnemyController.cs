@@ -5,15 +5,16 @@ using UnityEngine;
 public class EnemyController : Controller {
 
     public GameObject target = null;
-    public int threshold = 1;
+    public int threshold = 0;
     public float HealthOverride = 1;
     private Rigidbody rb;
     private float DefaultDrag;
+    private System.Random _Rnd = new System.Random();
 
     new void Awake() {
         base.Awake();
         Stat Speed = Stats[(int) Stat.StatEnum.Speed];
-        Speed.SetBase(15);
+        Speed.SetBase(10);
 
         Stat Attack = Stats[(int) Stat.StatEnum.Attack];
         Attack.SetValues(10, 1, 0);
@@ -24,27 +25,28 @@ public class EnemyController : Controller {
     }
 
     // Start is called before the first frame update
-    void Start() {
+    new void Start() {
+        base.Start();
         rb = GetComponent<Rigidbody>();
         DefaultDrag = rb.drag;
         target = GameObject.FindWithTag("Player");
     }
 
-    // Update is called once per frame
-    void FixedUpdate() {
+    new void Update() {
+        base.Update();
         if (IsDead) return;
         Stat Speed = Stats[(int) Stat.StatEnum.Speed];
-
         if (target != null) {
             rb.drag = DefaultDrag; 
             Vector3 dirToPlayer = target.transform.position - transform.position;
             float distToPlayer = dirToPlayer.magnitude;
             if (distToPlayer > threshold) {
                 Vector3.Normalize(dirToPlayer);
-                rb.AddForce(dirToPlayer * Speed.Value() * Time.deltaTime);
+                rb.velocity = dirToPlayer * Speed.Value() * Time.deltaTime;
             } else {
                 rb.drag = DefaultDrag * 5;
             }
+            rb.AddTorque(new Vector3(0,0,90));
         } else {
             target = GameObject.FindWithTag("Player");
             rb.drag = DefaultDrag * 5;

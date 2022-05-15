@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d0be82dd013e0e74591df80524c8a413
+  m_SerializeEntries:
+  - m_GUID: 4aa12b59fc0ba5245ac13fde9151e73d
+    m_Address: Prefabs/Tile_brown
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b511d42806188f14eab1ff78efefe656
+    m_Address: Prefabs/Tile_enemyspawner
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 61cfe1a95dafffb4d97814b1bcc3563d
+    m_Address: Prefabs/Tile_green
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 489a6aab2719be34694c3dabe69d5075
+    m_Address: Prefabs/Tile_grey
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: be5bc9e1bd259c34aa1c753795dc5cad
+    m_Address: Prefabs/Projectile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 07aca65241e47b344ba389b9d60fddec
+    m_Address: Prefabs/EnemyRat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b1fc2b5e5bfcc514386ab6a73b09be54
+    m_Address: Prefabs/HexTile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e1c33a8c380d2e7419fae612a66fb380, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b1ef11c24c9f95043a458c6783750cda, type: 2}
+    - {fileID: 11400000, guid: 2328bc63c127e634c8eaeb832eeffe7e, type: 2}

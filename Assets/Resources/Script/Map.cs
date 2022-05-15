@@ -2,23 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 // Point Top Maps
 public class Map : MonoBehaviour
 {
 
     private System.Random rnd = new System.Random();
-    private GameObject[] prefab = new GameObject[4];
+    private GameObject[] prefab;
+    private float[] distribution;
     private const int defaultTile = 0;
     private List<GameObject> rendered;
-    private HashSet<string> renderedSet;
+    private Dictionary<string, GameObject> renderedMap;
     public GameObject player = null;
     public Dictionary<string, int> tiles;   
-    public float tileSize;
-    public Material[] mats = new Material[4];
-
+    public float tileSize = 1;
     public bool localRender = false;
-    public bool UseColumns = true;
+    public bool rat = false;
+    public bool column = false;
+    public int renderRadius = 15;
 
     int Get(int q, int r) {
         string key = "" + q + "," + r;
@@ -28,15 +30,32 @@ public class Map : MonoBehaviour
         return tiles[key];
     }
 
+    int PickWithDistribution(float[] probs) {
+        int N = probs.Length;
+		float sum = 0;
+
+		foreach (var val in probs) { sum += val; }
+		if (sum != 1.0f) { return -1; }
+
+		int i = 0;
+		float randomvalue = (float)rnd.NextDouble();
+		while (randomvalue > 0)
+		{
+			randomvalue -= probs[i];
+			i++;
+		}
+
+		return i - 1;
+    }
+
     void GenerateTile(int q,  int r) {
         string key = "" + q + "," + r;
-        // tiles.Add(key, defaultTile);
-        if (UseColumns) {
-            tiles.Add(key, rnd.Next() % prefab.Length);
-        } else {
-            //column is last prefab
-            tiles.Add(key, rnd.Next() % (prefab.Length - 1));
-        }
+        tiles.Add(key, PickWithDistribution(distribution));
+    }
+
+    void SetTile(int q, int r, int tileType) {
+        string key = "" + q + "," + r;
+        tiles.Add(key, tileType);
     }
 
     double[] axial2Cube(double q, double r) {
@@ -90,7 +109,6 @@ public class Map : MonoBehaviour
     Dictionary<string, int> GetMapAroundPixel(int x, int y, int rad) {
         Dictionary<string, int> subMap = new Dictionary<string, int>();
         int[] axials = Pixel2Axial(x, y);
-        Debug.Log("" + axials[0] + " " + axials[1]);
         for (int q = -rad; q < rad; q++) {
             for (int r = Math.Max(-rad, -q-rad); r < Math.Min(rad, -q+rad); r++) {
                 string key = "" + (q+axials[0]) + "," + (r+axials[1]);
@@ -114,19 +132,31 @@ public class Map : MonoBehaviour
         int y = (int) player.transform.position.y;
         Dictionary<string, int> subMap = tiles;
         if (localRender) {
-            subMap = GetMapAroundPixel(x, y, 20);
+            subMap = GetMapAroundPixel(x, y, renderRadius);
             foreach (var go in rendered) {
-                Destroy(go);
+                if (subMap.ContainsKey(go.name)) {
+                    continue;
+                }
+                go.SetActive(false);
             }
             rendered.Clear();
-            renderedSet.Clear();
         } else {
-            GenerateAroundPixel(x, y, 20);
+            GenerateAroundPixel(x, y, renderRadius);
         }
         string output = "\n";
         int i = 0;
         foreach (var item in subMap) {
-            if (!localRender && renderedSet.Contains(item.Key)) continue;
+            if (localRender && renderedMap.ContainsKey(item.Key)) {
+                renderedMap[item.Key].SetActive(true);
+                // if (item.Value == 4) {
+                //     renderedMap[item.Key].transform.Find("GameObject").GetComponent<EnemySpawn>().Start();
+                // }
+                rendered.Add(renderedMap[item.Key]);
+                continue;
+            }
+            if (renderedMap.ContainsKey(item.Key)) {
+                continue;
+            }
             string[] coords = item.Key.Split(',');
             int q = Int32.Parse(coords[0]);
             int r = Int32.Parse(coords[1]);
@@ -135,117 +165,44 @@ public class Map : MonoBehaviour
             i++;
             int tileType = item.Value;
             GameObject go = (GameObject) Instantiate(prefab[tileType], new Vector3((float) xy[0],(float) xy[1],0), Quaternion.identity);
-            go.SetActive(true);
+            go.name = item.Key;
+            // go.SetActive(true);
             rendered.Add(go);
-            renderedSet.Add(item.Key);
+            renderedMap.Add(item.Key, go);
         }
         // Debug.Log(output);
     }
 
-    void Awake() {
-        tiles = new Dictionary<string, int>();
-        prefab = new GameObject[4] {new GameObject("Tile"), new GameObject("Tile"), new GameObject("Tile"), new GameObject("Column")};
-
-        GameObject go = null;
-        Mesh tileMesh = new Mesh();
-        Mesh columnMesh = new Mesh();
-        
-        // generating tile meshes
-        float increment = (float) (2 * Math.PI/6);
-        float offset = (float) (Math.PI/6);
-        int i = 0;
-        tileMesh.vertices = new Vector3[] {
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0),
-        };
-        tileMesh.triangles = new int[] {
-            0, 5, 1,
-            1, 5, 2,
-            2, 5, 4,
-            2, 4, 3
-        };
-
-        // generating column meshes
-        i = 0;
-        increment = (float) (2 * Math.PI/6);
-        offset = (float) (Math.PI/6);
-        int height = 3;
-        columnMesh.vertices = new Vector3[] {
-            //bottom vertices
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),0),
-
-            //top vertices
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),-height), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),-height), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),-height), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),-height), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),-height), 
-            new Vector3((float) Math.Cos( (i * increment) + offset ),(float) Math.Sin( (i++ * increment) + offset ),-height)
-        };
-        columnMesh.triangles = new int[] {
-            //top triangles
-            1, 5, 0,
-            2, 5, 1,
-            4, 5, 2,
-            3, 4, 2,
-
-            //side triangles
-            0, 6, 7,
-            7, 1, 0,
-
-            1, 7, 8,
-            8, 2, 1,
-
-            2, 8, 9,
-            9, 3, 2,
-
-            3, 9, 10,
-            10, 4, 3, 
-
-            4, 10, 11,
-            11, 5, 4,
-
-            5, 11, 6,
-            6, 0, 5,
-
-            //bottom triangles
-            6, 11, 7,
-            7, 11, 8,
-            8, 11, 10,
-            8, 10, 9,
-        };
-
-        // generating tile prefabs
-        for (int j = 0; j < 4; j++) {
-            go = prefab[j];
-            go.AddComponent<MeshFilter>();
-            MeshRenderer rd = go.AddComponent<MeshRenderer>();
-            Rigidbody rb = go.AddComponent<Rigidbody>();
-            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ; 
-            go.transform.localScale = new Vector3(1,1,1) * tileSize;
-            if (j == 3) {
-                go.GetComponent<MeshFilter>().mesh = columnMesh;
-                MeshCollider c = go.AddComponent<MeshCollider>();    
-                c.sharedMesh = columnMesh;
-                c.convex = true;
-            } else {
-                go.GetComponent<MeshFilter>().mesh = tileMesh;
-            }
-            rd.material = mats[j];
-            go.SetActive(false);
+    void Awake() {        
+        prefab = new GameObject[4];
+        distribution = new float[4] {0.25f, 0.35f, 0.4f, 0.0f};
+        if (rat) {
+            distribution = new float[4] {0.25f, 0.35f, 0.39f, 0.01f};
+        }
+        string[] tileAddresses = new string[4] {"Prefabs/Tile_brown", "Prefabs/Tile_green", "Prefabs/Tile_grey", "Prefabs/Tile_enemyspawner"};
+        if (column) {
+            tileAddresses = new string[4] {"Prefabs/Tile_brown", "Prefabs/Tile_green", "Prefabs/HexTile", "Prefabs/Tile_enemyspawner"};
+        }
+        Vector3 scale = new Vector3(1,1,1);
+        scale *= tileSize;
+        int idx = 0;
+        foreach (var str in tileAddresses) {
+            prefab[idx] = Addressables.LoadAssetAsync<GameObject>(str).WaitForCompletion();
+            prefab[idx].transform.localScale = scale;
+            idx++;
         }
 
+        tiles = new Dictionary<string, int>();
         rendered = new List<GameObject>();
-        renderedSet = new HashSet<string>();
+        renderedMap = new Dictionary<string, GameObject>();
+
+        int rad = 2;
+        int[] axials = Pixel2Axial(0, 0);
+        for (int q = -rad; q < rad; q++) {
+            for (int r = Math.Max(-rad, -q-rad); r < Math.Min(rad, -q+rad); r++) {
+                SetTile(q + axials[0], r + axials[1], 1);
+            }
+        }
     }
 
     // Start is called before the first frame update
