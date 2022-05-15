@@ -41,6 +41,10 @@ MonoBehaviour:
     m_Address: Prefabs/EnemyRat
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: b1fc2b5e5bfcc514386ab6a73b09be54
+    m_Address: Prefabs/HexTile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e1c33a8c380d2e7419fae612a66fb380, type: 2}
   m_SchemaSet:

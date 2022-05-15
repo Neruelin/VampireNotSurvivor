@@ -67,10 +67,17 @@ public class PlayerController : Controller {
             Direction = direction.normalized;
             rb.velocity = Direction * Speed.Value();
         }
-        
-        PlayerModel.transform.eulerAngles = new Vector3(0, 0, ProjectileController.GetAngleFromVectorFloat(Direction));
+        float DesiredAngle = ProjectileController.GetAngleFromVectorFloat(Direction);
+        float CurrentAngle = PlayerModel.transform.eulerAngles.z;
+        float AngleCorrection = DesiredAngle - CurrentAngle;
+        if (AngleCorrection > 180) AngleCorrection -= 360;
+        if (AngleCorrection < -180) AngleCorrection += 360;
 
-        if (SAtk.Ready) SAtk.Fire(Direction);
+        Vector3 DirectionCorrection = new Vector3(0, 0, AngleCorrection);
+        
+        PlayerModel.transform.eulerAngles += DirectionCorrection * Time.deltaTime * 10;
+
+        // if (SAtk.Ready) SAtk.Fire(PlayerModel.transform.right);
     }
 
     public static Quaternion DirToZQuat (Vector3 direction) {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyController : Controller {
 
     public GameObject target = null;
-    public int threshold = 1;
+    public int threshold = 0;
     public float HealthOverride = 1;
     private Rigidbody rb;
     private float DefaultDrag;
@@ -42,6 +42,8 @@ public class EnemyController : Controller {
             float distToPlayer = dirToPlayer.magnitude;
             if (distToPlayer > threshold) {
                 Vector3.Normalize(dirToPlayer);
+                Debug.Log(dirToPlayer);
+                Debug.Log(Speed.Value());
                 rb.velocity = dirToPlayer * Speed.Value() * Time.deltaTime;
             } else {
                 rb.drag = DefaultDrag * 5;
