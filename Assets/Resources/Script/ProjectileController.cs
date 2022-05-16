@@ -10,8 +10,8 @@ public class ProjectileController : Controller
     public float BaseAttack = 10;
     public int Penetrations = 0;
     public GameObject User;
-
     Collider playerBody;
+
     new void Awake() {
         base.Awake();
         Stat Speed = Stats[(int) Stat.StatEnum.Speed];
@@ -19,12 +19,6 @@ public class ProjectileController : Controller
 
         Stat Attack = Stats[(int) Stat.StatEnum.Attack];
         Attack.SetBase(BaseAttack);
-    }
-
-    // Start is called before the first frame update
-    new void Start()
-    {
-        StartCoroutine(Despawn());
     }
 
     // Update is called once per frame
@@ -43,6 +37,7 @@ public class ProjectileController : Controller
         Stat Penetration = Stats[(int) Stat.StatEnum.Penetration];
         Penetration.SetBase((int) Math.Ceiling(UserStats[(int) Stat.StatEnum.Penetration].Value()));
         this.User = User;
+        StartCoroutine(Despawn());
     }
 
     public static float GetAngleFromVectorFloat(Vector3 dir) {
