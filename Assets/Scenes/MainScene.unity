@@ -1030,6 +1030,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
+      propertyPath: column
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1271106305}
@@ -1043,7 +1047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: localRender
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: renderRadius

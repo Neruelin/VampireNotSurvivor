@@ -22,7 +22,6 @@ public class Map : MonoBehaviour
     public bool column = false;
     public int renderRadius = 15;
     [SerializeField]
-    private bool spawnEnemies = false;
     
     int Get(int q, int r) {
         string key = "" + q + "," + r;
