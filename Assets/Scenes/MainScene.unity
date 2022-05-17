@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 224596647}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -289,6 +289,68 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!850595691 &224596647
+LightingSettings:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 4
+  m_GIWorkflowMode: 1
+  m_EnableBakedLightmaps: 1
+  m_EnableRealtimeLightmaps: 0
+  m_RealtimeEnvironmentLighting: 1
+  m_BounceScale: 1
+  m_AlbedoBoost: 1
+  m_IndirectOutputScale: 1
+  m_UsingShadowmask: 1
+  m_BakeBackend: 1
+  m_LightmapMaxSize: 1024
+  m_BakeResolution: 40
+  m_Padding: 2
+  m_LightmapCompression: 3
+  m_AO: 0
+  m_AOMaxDistance: 1
+  m_CompAOExponent: 1
+  m_CompAOExponentDirect: 0
+  m_ExtractAO: 0
+  m_MixedBakeMode: 2
+  m_LightmapsBakeMode: 1
+  m_FilterMode: 1
+  m_LightmapParameters: {fileID: 15204, guid: 0000000000000000f000000000000000, type: 0}
+  m_ExportTrainingData: 0
+  m_TrainingDataDestination: TrainingData
+  m_RealtimeResolution: 2
+  m_ForceWhiteAlbedo: 0
+  m_ForceUpdates: 0
+  m_FinalGather: 0
+  m_FinalGatherRayCount: 256
+  m_FinalGatherFiltering: 1
+  m_PVRCulling: 1
+  m_PVRSampling: 1
+  m_PVRDirectSampleCount: 32
+  m_PVRSampleCount: 512
+  m_PVREnvironmentSampleCount: 256
+  m_PVREnvironmentReferencePointCount: 2048
+  m_LightProbeSampleCountMultiplier: 4
+  m_PVRBounces: 2
+  m_PVRMinBounces: 1
+  m_PVREnvironmentMIS: 1
+  m_PVRFilteringMode: 1
+  m_PVRDenoiserTypeDirect: 1
+  m_PVRDenoiserTypeIndirect: 1
+  m_PVRDenoiserTypeAO: 1
+  m_PVRFilterTypeDirect: 0
+  m_PVRFilterTypeIndirect: 0
+  m_PVRFilterTypeAO: 0
+  m_PVRFilteringGaussRadiusDirect: 1
+  m_PVRFilteringGaussRadiusIndirect: 5
+  m_PVRFilteringGaussRadiusAO: 2
+  m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+  m_PVRFilteringAtrousPositionSigmaIndirect: 2
+  m_PVRFilteringAtrousPositionSigmaAO: 1
+  m_PVRTiledBaking: 0
 --- !u!1 &542311810
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,9 +749,29 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5500623437726289945, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500623437726289945, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500623437726289945, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500623437726289945, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5500623438296634556, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: speed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5500623438296634556, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: AutoAttack
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5500623438296634556, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: ProjectilePrefab
@@ -717,7 +799,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5500623438296634559, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5500623438296634559, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: m_LocalRotation.w
@@ -755,6 +837,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6198342005912346186, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d69c9acdcbb85324b9709470a5bfa257, type: 2}
     - target: {fileID: 6291162642955369162, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: m_Height
       value: 2.73
@@ -778,6 +864,10 @@ PrefabInstance:
     - target: {fileID: 6291162642955369162, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: m_Direction
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7172535880570722153, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
+      propertyPath: items.Array.size
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7688078372080254788, guid: 94fc2c10827c91849bc9cc9c5886c739, type: 3}
       propertyPath: m_LocalRotation.x
@@ -887,53 +977,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1351992904}
   m_CullTransparentMesh: 1
---- !u!1 &1701855143
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1701855145}
-  - component: {fileID: 1701855144}
-  m_Layer: 0
-  m_Name: ProjectilePoolSingleton
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1701855144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1701855143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 611ee3489e9f6304eb0d9af0bdb5817b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pooledProjectiles: []
-  projectileToPool: {fileID: 2254049951965733170, guid: be5bc9e1bd259c34aa1c753795dc5cad, type: 3}
-  amountToPool: 400
---- !u!4 &1701855145
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1701855143}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.354143, y: 48.629017, z: 10.167375}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2140458682
 GameObject:
   m_ObjectHideFlags: 0
@@ -983,6 +1026,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: a443c8e75ce408746b00713dac9b99d3, type: 2}
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
+      propertyPath: rat
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1271106305}
@@ -1000,11 +1047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: renderRadius
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
-      propertyPath: spawnEnemies
-      value: 0
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5718362644927500676, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: mats.Array.data[0]
@@ -1069,6 +1112,10 @@ PrefabInstance:
     - target: {fileID: 5718362644927500683, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
       propertyPath: m_Name
       value: MapObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 5718362644927500683, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19145bf2ee3b93d47a7ff05df699303f, type: 3}

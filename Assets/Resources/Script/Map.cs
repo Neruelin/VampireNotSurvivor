@@ -18,6 +18,8 @@ public class Map : MonoBehaviour
     public Dictionary<string, int> tiles;   
     public float tileSize = 1;
     public bool localRender = false;
+    public bool rat = false;
+    public bool column = false;
     public int renderRadius = 15;
     [SerializeField]
     private bool spawnEnemies = false;
@@ -51,6 +53,11 @@ public class Map : MonoBehaviour
     void GenerateTile(int q,  int r) {
         string key = "" + q + "," + r;
         tiles.Add(key, PickWithDistribution(distribution));
+    }
+
+    void SetTile(int q, int r, int tileType) {
+        string key = "" + q + "," + r;
+        tiles.Add(key, tileType);
     }
 
     double[] axial2Cube(double q, double r) {
@@ -170,12 +177,14 @@ public class Map : MonoBehaviour
 
     void Awake() {        
         prefab = new GameObject[4];
-        if(spawnEnemies){
-            distribution = new float[4] {0.3f, 0.3f, 0.39f, 0.01f};
-        }else{
-            distribution = new float[3] {0.3f, 0.3f, 0.4f};
+        distribution = new float[4] {0.25f, 0.35f, 0.4f, 0.0f};
+        if (rat) {
+            distribution = new float[4] {0.25f, 0.35f, 0.39f, 0.01f};
         }
         string[] tileAddresses = new string[4] {"Prefabs/Tile_brown", "Prefabs/Tile_green", "Prefabs/Tile_grey", "Prefabs/Tile_enemyspawner"};
+        if (column) {
+            tileAddresses = new string[4] {"Prefabs/Tile_brown", "Prefabs/Tile_green", "Prefabs/HexTile", "Prefabs/Tile_enemyspawner"};
+        }
         Vector3 scale = new Vector3(1,1,1);
         scale *= tileSize;
         int idx = 0;
@@ -188,6 +197,14 @@ public class Map : MonoBehaviour
         tiles = new Dictionary<string, int>();
         rendered = new List<GameObject>();
         renderedMap = new Dictionary<string, GameObject>();
+
+        int rad = 2;
+        int[] axials = Pixel2Axial(0, 0);
+        for (int q = -rad; q < rad; q++) {
+            for (int r = Math.Max(-rad, -q-rad); r < Math.Min(rad, -q+rad); r++) {
+                SetTile(q + axials[0], r + axials[1], 1);
+            }
+        }
     }
 
     // Start is called before the first frame update

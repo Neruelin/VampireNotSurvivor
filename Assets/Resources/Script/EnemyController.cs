@@ -5,10 +5,11 @@ using UnityEngine;
 public class EnemyController : Controller {
 
     public GameObject target = null;
-    public int threshold = 1;
+    public int threshold = 0;
     public float HealthOverride = 1;
     private Rigidbody rb;
     private float DefaultDrag;
+    private System.Random _Rnd = new System.Random();
 
     new void Awake() {
         base.Awake();
@@ -45,6 +46,7 @@ public class EnemyController : Controller {
             } else {
                 rb.drag = DefaultDrag * 5;
             }
+            rb.AddTorque(new Vector3(0,0,90));
         } else {
             target = GameObject.FindWithTag("Player");
             rb.drag = DefaultDrag * 5;
